@@ -1,4 +1,4 @@
-package com.artlessavian.subpar.systems;
+package com.artlessavian.subpar.systems.draw;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.systems.components.PercentComponent;
@@ -25,10 +25,11 @@ public class GuiDrawSystem extends EntitySystem
 	public void addedToEngine(Engine engine)
 	{
 		entities = engine.getEntitiesFor(Family.all(PercentComponent.class).get());
+		setProcessing(false);
 	}
 
 	@Override
-	public void update(float deltaTime)
+	public void update(float rollover)
 	{
 		main.spriteBatch.setProjectionMatrix(main.identity);
 		main.bitmapFont.setColor(1,1,1,1);

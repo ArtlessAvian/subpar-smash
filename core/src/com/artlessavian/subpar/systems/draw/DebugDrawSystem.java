@@ -1,4 +1,4 @@
-package com.artlessavian.subpar.systems;
+package com.artlessavian.subpar.systems.draw;
 
 import com.artlessavian.subpar.Hitbox;
 import com.artlessavian.subpar.SubparMain;
@@ -28,10 +28,11 @@ public class DebugDrawSystem extends EntitySystem
 	public void addedToEngine(Engine engine)
 	{
 		entities = engine.getEntitiesFor(Family.all(PhysicsComponent.class).get());
+		setProcessing(false);
 	}
 
 	@Override
-	public void update(float deltaTime)
+	public void update(float rollover)
 	{
 		main.bitmapFont.setColor(1,1,1,0.5f);
 

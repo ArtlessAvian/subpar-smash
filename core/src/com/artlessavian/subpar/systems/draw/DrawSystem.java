@@ -1,4 +1,4 @@
-package com.artlessavian.subpar.systems;
+package com.artlessavian.subpar.systems.draw;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.states.State;
@@ -29,10 +29,11 @@ public class DrawSystem extends EntitySystem
 	public void addedToEngine(Engine engine)
 	{
 		entities = engine.getEntitiesFor(Family.all(PhysicsComponent.class).get());
+		setProcessing(false);
 	}
 
 	@Override
-	public void update(float deltaTime)
+	public void update(float rollover)
 	{
 		main.spriteBatch.draw(map, -map.getWidth() / 2f, -map.getHeight() / 2f);
 
@@ -41,7 +42,7 @@ public class DrawSystem extends EntitySystem
 			PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 			StateComponent sc = entity.getComponent(StateComponent.class);
 
-			sc.state.draw(deltaTime);
+			sc.state.draw(rollover);
 
 			physC.sprite.setCenter(physC.position.x, physC.position.y + physC.sprite.getHeight() / 2);
 			physC.sprite.setFlip(physC.facing < 0, false);

@@ -1,15 +1,16 @@
-package com.artlessavian.subpar.systems;
+package com.artlessavian.subpar.systems.draw;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.systems.components.PhysicsComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
 
-public class CameraSystem extends IntervalSystem
+public class CameraSystem extends EntitySystem
 {
 	private ImmutableArray<Entity> entities;
 	SubparMain main;
@@ -18,18 +19,18 @@ public class CameraSystem extends IntervalSystem
 	final float lazyWeightY = 100;
 
 
-	public CameraSystem(float interval, SubparMain subparMain)
+	public CameraSystem(SubparMain subparMain)
 	{
-		super(interval);
 		main = subparMain;
 	}
 
 	public void addedToEngine(Engine engine)
 	{
 		entities = engine.getEntitiesFor(Family.all(PhysicsComponent.class).get());
+		setProcessing(false);
 	}
 
-	public void updateInterval()
+	public void update(float rollover)
 	{
 //		float lowestX = 666666666;
 //		float lowestY = 666666666;

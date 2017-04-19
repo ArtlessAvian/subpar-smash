@@ -4,6 +4,10 @@ import com.artlessavian.subpar.InputInterface;
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.systems.*;
 import com.artlessavian.subpar.systems.components.PhysicsComponent;
+import com.artlessavian.subpar.systems.draw.CameraSystem;
+import com.artlessavian.subpar.systems.draw.DebugDrawSystem;
+import com.artlessavian.subpar.systems.draw.DrawSystem;
+import com.artlessavian.subpar.systems.draw.GuiDrawSystem;
 import com.artlessavian.subpar.systems.entities.Fighter;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Screen;
@@ -14,6 +18,11 @@ public class FightScreen implements Screen
 {
 	SubparMain main;
 	Engine engine;
+
+	CameraSystem camSys;
+	DrawSystem drawSys;
+	GuiDrawSystem guiDrawSys;
+	DebugDrawSystem debugDrawSys;
 
 	Vector2 playerPos;
 	Vector2 followPos;
@@ -30,10 +39,15 @@ public class FightScreen implements Screen
 		engine.addSystem(new StateSystem(1 / 60f));
 		engine.addSystem(new PhysicsSystem(1 / 60f, 1));
 		engine.addSystem(new LevelCollisionSystem(1 / 60f));
-		engine.addSystem(new CameraSystem(1 / 60f, main));
-		engine.addSystem(new DrawSystem(main.assetManager.get("Prototype/map2 - Copy.png", Texture.class), main));
-		engine.addSystem(new GuiDrawSystem(main));
-		engine.addSystem(new DebugDrawSystem(main));
+
+		camSys = new CameraSystem(main);
+		drawSys = new DrawSystem(main.assetManager.get("Prototype/map2 - Copy.png", Texture.class), main);
+		guiDrawSys = new GuiDrawSystem(main);
+		debugDrawSys = new DebugDrawSystem(main);
+		engine.addSystem(camSys);
+		engine.addSystem(drawSys);
+		engine.addSystem(guiDrawSys);
+		engine.addSystem(debugDrawSys);
 
 		Fighter player = new Fighter(new Vector2(-400, 0), main.playerInput, true, main, "Falco");
 		Fighter follow = new Fighter(new Vector2(400, 0), following, false, main, "Fox");
@@ -49,8 +63,25 @@ public class FightScreen implements Screen
 
 	}
 
+	float rollover = 0;
+
 	@Override
 	public void render(float delta)
+	{
+		rollover += delta * 60;
+		while(rollover >= 1)
+		{
+			rollover--;
+			engineIterate();
+		}
+
+		camSys.update(rollover);
+		drawSys.update(rollover);
+		guiDrawSys.update(rollover);
+		debugDrawSys.update(rollover);
+	}
+
+	public void engineIterate()
 	{
 		// Try to match y pos
 		if (Math.abs(playerPos.y - followPos.y) > 256)
@@ -81,7 +112,7 @@ public class FightScreen implements Screen
 			following.a = Math.random() > 0.99;
 		}
 
-		engine.update(delta);
+		engine.update(1/60f);
 	}
 
 	@Override
