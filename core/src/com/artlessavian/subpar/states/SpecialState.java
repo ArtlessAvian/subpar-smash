@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Entity;
 
 public class SpecialState extends AttackState
 {
-	float timer;
+	int timer;
 	final Entity entity;
 
 	public SpecialState(Entity e)
@@ -59,14 +59,14 @@ public class SpecialState extends AttackState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 		timer -= delta;
 
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		if (timer < 5 / 60f)
+		if (timer < 5)
 		{
 			physC.velocity.x = physC.facing * 10000;
 		}

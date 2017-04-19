@@ -5,23 +5,23 @@ import com.artlessavian.subpar.systems.components.StateComponent;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
+import com.badlogic.ashley.systems.IteratingSystem;
 
-public class StateSystem extends IntervalIteratingSystem
+public class StateSystem extends IteratingSystem
 {
 	float interval;
 
-	public StateSystem(float interval)
+	public StateSystem()
 	{
-		super(Family.all(StateComponent.class).get(), interval);
-		this.interval = interval;
+		super(Family.all(StateComponent.class).get());
 	}
 
 	@Override
-	protected void processEntity(Entity entity)
+	protected void processEntity(Entity entity, float delta)
 	{
 		StateComponent sc = entity.getComponent(StateComponent.class);
 
 		sc.state.doStateChanges();
-		sc.state.act(interval);
+		sc.state.act(1);
 	}
 }

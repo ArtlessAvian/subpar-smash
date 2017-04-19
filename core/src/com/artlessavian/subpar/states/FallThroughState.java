@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Entity;
 
 public class FallThroughState extends UngroundedActionableState
 {
-	float timer;
+	int timer;
 	final Entity entity;
 
 	public FallThroughState(Entity e)
@@ -18,7 +18,7 @@ public class FallThroughState extends UngroundedActionableState
 	@Override
 	public void enter(State oldState)
 	{
-		timer = 15 / 60f;
+		timer = 15;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class FallThroughState extends UngroundedActionableState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

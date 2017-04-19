@@ -7,10 +7,10 @@ import java.util.LinkedList;
 
 public class Hitbox
 {
-	private float appearTime;
-	private float existTime;
-	private float appearTimerrrrrrrrrr;
-	private float existTimerrrrrrrrrr;
+	private int appearTime;
+	private int existTime;
+	private int appearTimerrrrrrrrrr;
+	private int existTimerrrrrrrrrr;
 
 	public LinkedList<Entity> gotRekt;
 
@@ -20,7 +20,7 @@ public class Hitbox
 	boolean exists;
 	public Rectangle collision;
 
-	public Hitbox(Rectangle collision, float damage, float angle, float appearTimeeeeee, float existTimeeeeee)
+	public Hitbox(Rectangle collision, float damage, float angle, int appearTimeeeeee, int existTimeeeeee)
 	{
 		this.appearTime = appearTimeeeeee;
 		this.existTime = existTimeeeeee;

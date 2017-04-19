@@ -52,20 +52,20 @@ public class AttackHelper
 		LinkedList<Move> moveset = new LinkedList<Move>();
 
 		LinkedList<Hitbox> utilt = new LinkedList<Hitbox>();
-		utilt.add(new Hitbox(new Rectangle(-128, 192, 256, 64), 7, 90, 5 / 60f, 10 / 60f));
-		moveset.add(new Move(20/60f, utilt));
+		utilt.add(new Hitbox(new Rectangle(-128, 192, 256, 64), 7, 90, 5, 10));
+		moveset.add(new Move(20, utilt));
 
 		LinkedList<Hitbox> dtilt = new LinkedList<Hitbox>();
-		dtilt.add(new Hitbox(new Rectangle(0, 0, 256, 20), 5, 70, 3 / 60f, 2 / 60f));
-		moveset.add(new Move(7/60f, dtilt));
+		dtilt.add(new Hitbox(new Rectangle(0, 0, 256, 20), 5, 70, 3, 2));
+		moveset.add(new Move(7, dtilt));
 
 		LinkedList<Hitbox> ftilt = new LinkedList<Hitbox>();
-		ftilt.add(new Hitbox(new Rectangle(0, 0, 256, 256), 8, 45, 5 / 60f, 3 / 60f));
-		moveset.add(new Move(25/60f, ftilt));
+		ftilt.add(new Hitbox(new Rectangle(0, 0, 256, 256), 8, 45, 5, 3));
+		moveset.add(new Move(25, ftilt));
 
 		LinkedList<Hitbox> jab = new LinkedList<Hitbox>();
-		jab.add(new Hitbox(new Rectangle(0, 0, 128, 256), 3, 20, 2 / 60f, 8 / 60f));
-		Move jabMove = new Move(10/60f, jab);
+		jab.add(new Hitbox(new Rectangle(0, 0, 128, 256), 3, 20, 2, 8));
+		Move jabMove = new Move(10, jab);
 
 		moveset.add(jabMove);
 
@@ -78,9 +78,9 @@ public class AttackHelper
 		}
 
 		LinkedList<Hitbox> upair = new LinkedList<Hitbox>();
-		upair.add(new Hitbox(new Rectangle(-50, 128, 100, 256), 2, 90, 5 / 60f, 5 / 60f));
-		upair.add(new Hitbox(new Rectangle(-10, 192, 20, 64), 12, 90, 15 / 60f, 5 / 60f));
-		Move upairMove = new Move(20/60f, upair);
+		upair.add(new Hitbox(new Rectangle(-50, 128, 100, 256), 2, 90, 5, 5));
+		upair.add(new Hitbox(new Rectangle(-10, 192, 20, 64), 12, 90, 15, 5));
+		Move upairMove = new Move(20, upair);
 
 		for (int i = 10; i < 15; i++)
 		{
@@ -89,9 +89,9 @@ public class AttackHelper
 		}
 
 		LinkedList<Hitbox> phantasm = new LinkedList<Hitbox>();
-		phantasm.add(new Hitbox(new Rectangle(-756, 64, 956, 128), 20, 270, 25 / 60f, 3 / 60f));
-		phantasm.add(new Hitbox(new Rectangle(-200, 0, 400, 400), 9, 270, 28 / 60f, 2 / 60f));
-		Move phantasmMove = new Move(30/60f, phantasm);
+		phantasm.add(new Hitbox(new Rectangle(-756, 64, 956, 128), 20, 270, 25, 3));
+		phantasm.add(new Hitbox(new Rectangle(-200, 0, 400, 400), 9, 270, 28, 2));
+		Move phantasmMove = new Move(30, phantasm);
 
 		for (int i = 15; i < 20; i++)
 		{

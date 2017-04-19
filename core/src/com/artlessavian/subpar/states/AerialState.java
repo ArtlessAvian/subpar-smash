@@ -1,17 +1,14 @@
 package com.artlessavian.subpar.states;
 
 import com.artlessavian.subpar.AttackHelper;
-import com.artlessavian.subpar.Hitbox;
 import com.artlessavian.subpar.InputInterface;
 import com.artlessavian.subpar.systems.components.ControlComponent;
 import com.artlessavian.subpar.systems.components.PhysicsComponent;
 import com.badlogic.ashley.core.Entity;
 
-import java.util.LinkedList;
-
 public class AerialState extends AttackState
 {
-	float timer;
+	int timer;
 	final Entity entity;
 
 	public AerialState(Entity e)
@@ -54,7 +51,7 @@ public class AerialState extends AttackState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

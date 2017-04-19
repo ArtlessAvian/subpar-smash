@@ -44,7 +44,7 @@ public abstract class UngroundedActionableState extends State
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 		InputInterface input = entity.getComponent(ControlComponent.class).inputInterface;

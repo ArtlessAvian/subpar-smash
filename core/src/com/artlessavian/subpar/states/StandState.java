@@ -62,7 +62,7 @@ public class StandState extends GroundedActionableState
 
 		if (input.horizontal != 0)
 		{
-			if (timeInState < 10 / 60f && sc.stateHistory.getFirst().getClass() == WalkState.class && physC.facing == input.horizontal)
+			if (timeInState < 10 && sc.stateHistory.getFirst().getClass() == WalkState.class && physC.facing == input.horizontal)
 			{
 				sc.changeState(DashState.class);
 				return;
@@ -76,7 +76,7 @@ public class StandState extends GroundedActionableState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

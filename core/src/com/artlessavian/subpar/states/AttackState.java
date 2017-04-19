@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public abstract class AttackState extends State
 {
-	float timer;
+	int timer;
 	final Entity entity;
 
 	public LinkedList<Hitbox> hitboxes;
@@ -73,7 +73,7 @@ public abstract class AttackState extends State
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		timer -= delta;
 

@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 public class HitstunState extends State
 {
 	float noDecrementTimer;
-	float timer;
+	int timer;
 
 	final Entity entity;
 
@@ -27,7 +27,7 @@ public class HitstunState extends State
 	{
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		timer = 1 / 60f * physC.velocity.len()/120;
+		timer = (int)(5);
 		noDecrementTimer = timer;
 
 		if (oldState.getClass() != HitstunState.class)
@@ -73,7 +73,7 @@ public class HitstunState extends State
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		timer -= delta;
 
@@ -85,8 +85,8 @@ public class HitstunState extends State
 
 		// TODO: Add SDI
 		// Right now its SDI every frame, because why not
-		physC.position.x += delta * 200 * input.horizontal;
-		physC.position.y += delta * 200 * input.vertical;
+		physC.position.x += delta * 20 * input.horizontal;
+		physC.position.y += delta * 20 * input.vertical;
 	}
 
 	@Override

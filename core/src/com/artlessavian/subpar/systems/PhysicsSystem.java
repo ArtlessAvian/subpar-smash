@@ -7,31 +7,28 @@ import com.artlessavian.subpar.systems.components.StateComponent;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
+import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class PhysicsSystem extends IntervalIteratingSystem
+public class PhysicsSystem extends IteratingSystem
 {
-	final float interval;
-	final float timeDilation;
 
 	final float temporaryXBounds = 1920;
 	final float temporaryYBounds = 1920;
 
-	public PhysicsSystem(float interval, float timeDialation)
+	public PhysicsSystem()
 	{
-		super(Family.all(PhysicsComponent.class).get(), interval);
-		this.interval = interval;
-		this.timeDilation = timeDialation;
+		super(Family.all(PhysicsComponent.class).get());
 	}
 
 	@Override
-	protected void processEntity(Entity entity)
+	protected void processEntity(Entity entity, float interval)
 	{
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		physC.position.x += physC.velocity.x * interval * timeDilation;
-		physC.position.y += physC.velocity.y * interval * timeDilation;
+		physC.position.x += physC.velocity.x * 1/60f;
+		physC.position.y += physC.velocity.y * 1/60f;
 
 		physC.movementRect.x = Math.min(physC.position.x, physC.lastPosition.x);
 		physC.movementRect.y = Math.min(physC.position.y, physC.lastPosition.y);
@@ -65,7 +62,7 @@ public class PhysicsSystem extends IntervalIteratingSystem
 				physC.lastPosition.y -= temporaryYBounds * 2;
 			}
 
-			if (physC.velocity.y < -2560 / interval / 8)
+			if (physC.velocity.y < -2560 / (1/60f) / 8)
 			{
 				StateComponent sc = entity.getComponent(StateComponent.class);
 				if (sc != null)
@@ -80,7 +77,7 @@ public class PhysicsSystem extends IntervalIteratingSystem
 		{
 			if (!physC.grounded)
 			{
-				physC.velocity.y -= 3600 * interval * timeDilation;
+				physC.velocity.y -= 3600 * 1/60f;
 			}
 		}
 	}

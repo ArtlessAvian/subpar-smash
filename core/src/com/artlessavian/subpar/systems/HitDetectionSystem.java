@@ -5,20 +5,16 @@ import com.artlessavian.subpar.states.HitstunState;
 import com.artlessavian.subpar.systems.components.*;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
 
-public class HitDetectionSystem extends IntervalSystem
+public class HitDetectionSystem extends EntitySystem
 {
 	private ImmutableArray<Entity> entitiesWHitbox;
 	private ImmutableArray<Entity> entitiesWHurtbox;
-
-	public HitDetectionSystem(float v)
-	{
-		super(v);
-	}
 
 	public void addedToEngine(Engine engine)
 	{
@@ -27,7 +23,7 @@ public class HitDetectionSystem extends IntervalSystem
 	}
 
 	@Override
-	protected void updateInterval()
+	public void update(float delta)
 	{
 		// Dang this really sucks
 

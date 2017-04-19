@@ -27,7 +27,7 @@ public abstract class State
 	public abstract void doStateChanges();
 	// Change State if necessary
 
-	public abstract void act(float delta);
+	public abstract void act(int delta);
 	// Do Physics stuff
 
 	public abstract void draw(float delta);

@@ -8,7 +8,7 @@ import com.badlogic.ashley.core.Entity;
 
 public class DashState extends GroundedActionableState
 {
-	float timer;
+	int timer;
 
 	final Entity entity;
 
@@ -26,7 +26,7 @@ public class DashState extends GroundedActionableState
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 		InputInterface input = entity.getComponent(ControlComponent.class).inputInterface;
 
-		timer = 10 / 60f;
+		timer = 10;
 
 		physC.facing = input.horizontal;
 
@@ -90,7 +90,7 @@ public class DashState extends GroundedActionableState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

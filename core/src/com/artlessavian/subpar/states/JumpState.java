@@ -84,7 +84,7 @@ public class JumpState extends UngroundedActionableState
 		}
 	}
 
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 
@@ -102,7 +102,7 @@ public class JumpState extends UngroundedActionableState
 		if (thisIsDoubleJump)
 		{
 			PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
-			physC.sprite.rotate((float)physC.facing * -1000 * delta);
+			physC.sprite.rotate((float)physC.facing * -1000 * 1/60f);
 		}
 	}
 }

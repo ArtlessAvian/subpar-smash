@@ -8,10 +8,10 @@ import java.util.LinkedList;
 
 public class Move
 {
-	public float time;
+	public int time;
 	public LinkedList<Hitbox> data;
 
-	public Move(float time, LinkedList<Hitbox> hitboxes)
+	public Move(int time, LinkedList<Hitbox> hitboxes)
 	{
 		this.time = time;
 		this.data = hitboxes;

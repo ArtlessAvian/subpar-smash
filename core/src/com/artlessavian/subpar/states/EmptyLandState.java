@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Entity;
 
 public class EmptyLandState extends GroundedActionableState
 {
-	float timer;
+	int timer;
 
 	final Entity entity;
 
@@ -24,7 +24,7 @@ public class EmptyLandState extends GroundedActionableState
 
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		timer = 4 / 60f;
+		timer = 4;
 
 		physC.velocity.y = 0;
 
@@ -62,7 +62,7 @@ public class EmptyLandState extends GroundedActionableState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

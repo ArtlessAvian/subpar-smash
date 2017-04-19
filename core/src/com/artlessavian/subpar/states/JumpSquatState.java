@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Entity;
 
 public class JumpSquatState extends GroundedActionableState
 {
-	float timer;
+	int timer;
 	final Entity entity;
 
 	public JumpSquatState(Entity e)
@@ -23,7 +23,7 @@ public class JumpSquatState extends GroundedActionableState
 
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		timer = 5 / 60f;
+		timer = 5;
 
 		physC.setSprite(2, 0);
 	}
@@ -58,7 +58,7 @@ public class JumpSquatState extends GroundedActionableState
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		super.act(delta);
 

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class LaunchState extends State
 {
-	float timer;
+	int timer;
 
 	final Entity entity;
 
@@ -23,7 +23,7 @@ public class LaunchState extends State
 	@Override
 	public void enter(State oldState)
 	{
-		timer = 30 / 60f;
+		timer = 30;
 
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 		InputInterface input = entity.getComponent(ControlComponent.class).inputInterface;
@@ -60,14 +60,14 @@ public class LaunchState extends State
 	{
 		StateComponent sc = entity.getComponent(StateComponent.class);
 
-		if (timer <= 0.001)
+		if (timer <= 0)
 		{
 			sc.changeState(JumpState.class);
 		}
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		timer -= delta;
 	}

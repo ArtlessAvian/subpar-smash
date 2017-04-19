@@ -35,10 +35,10 @@ public class FightScreen implements Screen
 
 		following = new InputInterface();
 
-		engine.addSystem(new HitDetectionSystem(1 / 60f));
-		engine.addSystem(new StateSystem(1 / 60f));
-		engine.addSystem(new PhysicsSystem(1 / 60f, 1));
-		engine.addSystem(new LevelCollisionSystem(1 / 60f));
+		engine.addSystem(new HitDetectionSystem());
+		engine.addSystem(new StateSystem());
+		engine.addSystem(new PhysicsSystem());
+		engine.addSystem(new LevelCollisionSystem());
 
 		camSys = new CameraSystem(main);
 		drawSys = new DrawSystem(main.assetManager.get("Prototype/map2 - Copy.png", Texture.class), main);
@@ -112,7 +112,7 @@ public class FightScreen implements Screen
 			following.a = Math.random() > 0.99;
 		}
 
-		engine.update(1/60f);
+		engine.update(0);
 	}
 
 	@Override

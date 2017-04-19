@@ -41,7 +41,7 @@ public class HelplessState extends State
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 	}
 

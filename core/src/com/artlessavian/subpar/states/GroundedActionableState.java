@@ -58,11 +58,11 @@ public abstract class GroundedActionableState extends State
 	}
 
 	@Override
-	public void act(float delta)
+	public void act(int delta)
 	{
 		PhysicsComponent physC = entity.getComponent(PhysicsComponent.class);
 
-		physC.velocity.x = Math.signum(physC.velocity.x) * Math.max(Math.signum(physC.velocity.x) * physC.velocity.x - friction * delta, 0);
+		physC.velocity.x = Math.signum(physC.velocity.x) * Math.max(Math.signum(physC.velocity.x) * physC.velocity.x - friction * 1/60f, 0);
 	}
 
 	@Override
