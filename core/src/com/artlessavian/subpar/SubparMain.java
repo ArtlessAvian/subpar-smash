@@ -1,6 +1,5 @@
 package com.artlessavian.subpar;
 
-import com.artlessavian.subpar.screens.HypeScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -29,33 +28,21 @@ public class SubparMain extends Game
 	private Sprite debuggg;
 	public AssetManager assetManager;
 
-	public DrawableInputAdapter inputs;
-	public InputInterface playerInput;
-
 	@Override
 	public void create()
 	{
 		resume();
 
-		setScreen(new HypeScreen(this));
+//		setScreen(new HypeScreen(this));
 	}
 
 	@Override
 	public void render()
 	{
-		spriteBatch.begin();
-
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		super.render();
-
-		// This renders above everything
-		bitmapFont.getData().setScale(3);
-		bitmapFont.draw(spriteBatch, screen.getClass().getSimpleName(), camera.position.x - camera.viewportWidth / 2 + 3, camera.position.y + camera.viewportHeight / 2 + 3);
-		inputs.draw(this);
-
-		spriteBatch.end();
 	}
 
 	@Override
@@ -103,10 +90,6 @@ public class SubparMain extends Game
 			bitmapFont.setColor(1, 1, 1, 0.5f);
 			bitmapFont.setFixedWidthGlyphs("1234567890.");
 		}
-		if (playerInput == null)
-		{
-			playerInput = new InputInterface();
-		}
 		if (debuggg == null)
 		{
 			debuggg = new Sprite(new Texture("icon.png"));
@@ -119,15 +102,6 @@ public class SubparMain extends Game
 			assetManager.load("Prototype/Falco.png", Texture.class);
 			assetManager.load("Prototype/map2 - Copy.png", Texture.class);
 		}
-
-		if (Gdx.app.getType() == Application.ApplicationType.Android)
-		{
-			inputs = new TouchInput(playerInput);
-		} else
-		{
-			inputs = new KeyboardInput(playerInput);
-		}
-		Gdx.input.setInputProcessor(inputs);
 
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
