@@ -1,5 +1,6 @@
 package com.artlessavian.subpar;
 
+import com.artlessavian.subpar.fight.FightScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -19,8 +20,7 @@ public class SubparMain extends Game
 	public float screenHeight; // Inches
 	public float screenRatio; // Width / Height
 
-	public Matrix4 identity;
-	public OrthographicCamera camera;
+	public OrthographicCamera screenSpace;
 
 	public SpriteBatch spriteBatch;
 	public BitmapFont bitmapFont;
@@ -31,18 +31,26 @@ public class SubparMain extends Game
 	@Override
 	public void create()
 	{
+		// TODO: Check if redundant
 		resume();
 
-//		setScreen(new HypeScreen(this));
+		setScreen(new LoadScreen(this, new TitleScreen(this)));
 	}
 
 	@Override
 	public void render()
 	{
-		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		spriteBatch.begin();
+
 		super.render();
+
+		spriteBatch.setProjectionMatrix(screenSpace.combined);
+		bitmapFont.draw(spriteBatch, this.screen.getClass().getSimpleName(), 6, 18);
+
+		spriteBatch.end();
 	}
 
 	@Override
@@ -52,32 +60,25 @@ public class SubparMain extends Game
 		screenHeight = height;
 		screenRatio = (float)width / (float)height;
 
-		camera.viewportWidth = 2880;
-		camera.viewportHeight = 2880 / screenRatio;
-		camera.update();
+		screenSpace.viewportWidth = 720 * screenRatio;
+		screenSpace.viewportHeight = 720;
+		screenSpace.position.x = screenSpace.viewportWidth/2f;
+		screenSpace.position.y = screenSpace.viewportHeight/2f;
+		screenSpace.update();
 
-		// Literally Magic Numbers
-		identity.idt();
-		identity.scale(2/((float)screenWidth),2/((float)screenHeight),0);
-		identity.translate(-screenWidth/2, -screenHeight/2, 0);
-	}
-
-	@Override
-	public void pause()
-	{
-
+		super.resize(width, height);
 	}
 
 	@Override
 	public void resume()
 	{
-		if (identity == null)
+		super.resume();
+
+		// Initializes null objects
+		if (screenSpace == null)
 		{
-			identity = new Matrix4();
-		}
-		if (camera == null)
-		{
-			camera = new OrthographicCamera();
+			screenSpace = new OrthographicCamera();
+			screenSpace.update();
 		}
 		if (spriteBatch == null)
 		{
@@ -86,7 +87,7 @@ public class SubparMain extends Game
 		if (bitmapFont == null)
 		{
 			bitmapFont = new BitmapFont();
-			bitmapFont.getData().setScale(3);
+//			bitmapFont.getData().setScale(2);
 			bitmapFont.setColor(1, 1, 1, 0.5f);
 			bitmapFont.setFixedWidthGlyphs("1234567890.");
 		}
@@ -98,11 +99,13 @@ public class SubparMain extends Game
 		if (assetManager == null)
 		{
 			assetManager = new AssetManager();
+			assetManager.load("icon.png", Texture.class);
 			assetManager.load("Prototype/Fox.png", Texture.class);
 			assetManager.load("Prototype/Falco.png", Texture.class);
 			assetManager.load("Prototype/map2 - Copy.png", Texture.class);
 		}
 
+		// TODO: Check if redundant
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -114,6 +117,8 @@ public class SubparMain extends Game
 		bitmapFont.dispose();
 		assetManager.dispose();
 	}
+
+	// Draws Convenient Shapes
 
 	public void debugLine(float ax, float ay, float bx, float by)
 	{
