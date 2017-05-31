@@ -28,7 +28,6 @@ public class SubparMain extends Game
 
 	private Sprite debuggg;
 	public AssetManager assetManager;
-	public AttackHelper attackHelper;
 
 	public DrawableInputAdapter inputs;
 	public InputInterface playerInput;
@@ -119,10 +118,6 @@ public class SubparMain extends Game
 			assetManager.load("Prototype/Fox.png", Texture.class);
 			assetManager.load("Prototype/Falco.png", Texture.class);
 			assetManager.load("Prototype/map2 - Copy.png", Texture.class);
-		}
-		if (attackHelper == null)
-		{
-			attackHelper = new AttackHelper();
 		}
 
 		if (Gdx.app.getType() == Application.ApplicationType.Android)
