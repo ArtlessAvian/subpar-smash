@@ -1,19 +1,19 @@
 package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
-import com.artlessavian.subpar.fight.ecs.components.ExtraPhysicsComponent;
-import com.artlessavian.subpar.fight.ecs.components.InputComponent;
-import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
-import com.artlessavian.subpar.fight.ecs.components.SpriteComponent;
+import com.artlessavian.subpar.fight.ecs.components.*;
+import com.artlessavian.subpar.fight.fighterstates.StandState;
+import com.artlessavian.subpar.fight.fighterstates.WalkState;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Fighter extends Entity
 {
 	SpriteComponent spriteC;
-	PhysicsComponent physicsC;
+	public PhysicsComponent physicsC;
 	ExtraPhysicsComponent extraPhysicsC;
-	InputComponent inputC;
+	public InputComponent inputC;
+	private StateComponent stateC;
 
 	public Fighter(SubparMain main)
 	{
@@ -36,6 +36,10 @@ public class Fighter extends Entity
 		f.extraPhysicsC.maxFallSpeed = 300;
 		f.add(f.extraPhysicsC);
 
+		f.stateC = new StateComponent();
+		addStates(f, f.stateC);
+		f.add(f.stateC);
+
 		f.inputC = new InputComponent();
 		f.add(f.inputC);
 
@@ -43,5 +47,12 @@ public class Fighter extends Entity
 		f.add(f.spriteC);
 
 		return f;
+	}
+
+	public static void addStates(Fighter f, StateComponent stateC)
+	{
+		stateC.machine.addState(new StandState(f));
+		stateC.machine.addState(new WalkState(f));
+		stateC.machine.gotoState(StandState.class);
 	}
 }

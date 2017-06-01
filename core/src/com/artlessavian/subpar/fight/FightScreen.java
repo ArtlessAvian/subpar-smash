@@ -2,10 +2,7 @@ package com.artlessavian.subpar.fight;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
-import com.artlessavian.subpar.fight.ecs.systems.CollisionSystem;
-import com.artlessavian.subpar.fight.ecs.systems.DrawSystem;
-import com.artlessavian.subpar.fight.ecs.systems.InputSystem;
-import com.artlessavian.subpar.fight.ecs.systems.PhysicsSystem;
+import com.artlessavian.subpar.fight.ecs.systems.*;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,7 +20,8 @@ public class FightScreen implements Screen
 		this.main = main;
 
 		engine = new Engine();
-		engine.addSystem(new InputSystem());
+//		engine.addSystem(new InputSystem());
+		engine.addSystem(new StateSystem());
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new CollisionSystem());
 

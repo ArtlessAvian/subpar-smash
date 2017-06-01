@@ -72,10 +72,12 @@ public class DrawSystem extends EntitySystem
 
 			spriteC.sprite.draw(main.spriteBatch);
 
-			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.x + "", 100, 100);
-			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.y + "", 100, 150);
-			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 100, 200);
-			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 100, 250);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.pos.x + "", 100, 100);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.pos.y + "", 100, 120);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.x + "", 100, 140);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.y + "", 100, 160);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 100, 180);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 100, 200);
 
 			main.debugLine(-300, 0, 300, 0);
 		}
