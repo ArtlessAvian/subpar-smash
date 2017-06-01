@@ -24,7 +24,6 @@ public class SubparMain extends Game
 	public AssetManager assetManager;
 
 
-
 	private Sprite debugCircle;
 	private Sprite debugTriangle;
 
@@ -62,8 +61,8 @@ public class SubparMain extends Game
 
 		screenSpace.viewportWidth = 720 * screenRatio;
 		screenSpace.viewportHeight = 720;
-		screenSpace.position.x = screenSpace.viewportWidth/2f;
-		screenSpace.position.y = screenSpace.viewportHeight/2f;
+		screenSpace.position.x = screenSpace.viewportWidth / 2f;
+		screenSpace.position.y = screenSpace.viewportHeight / 2f;
 		screenSpace.update();
 
 		super.resize(width, height);

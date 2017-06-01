@@ -11,7 +11,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class DrawSystem extends EntitySystem
@@ -47,7 +46,7 @@ public class DrawSystem extends EntitySystem
 
 	public void resize()
 	{
-		cam.viewportWidth = 720 * Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
+		cam.viewportWidth = 720 * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
 	}
 
 	public void shakeScreen(float time, float strength)
@@ -91,8 +90,8 @@ public class DrawSystem extends EntitySystem
 		if (screenShakeTime > 0)
 		{
 			cam.translate(
-				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier,
-				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier
+				(float)(Math.random() * 2 - 1) * screenShakeAmount * screenShakeMultiplier,
+				(float)(Math.random() * 2 - 1) * screenShakeAmount * screenShakeMultiplier
 			);
 			screenShakeTime--;
 		}

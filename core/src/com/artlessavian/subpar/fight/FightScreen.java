@@ -42,7 +42,7 @@ public class FightScreen implements Screen
 
 	boolean timeStop;
 	float rollover;
-	float deltaTime = 1/60f;
+	float deltaTime = 1 / 60f;
 	long engineRuns = 0;
 
 	@Override

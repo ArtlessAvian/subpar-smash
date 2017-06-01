@@ -11,6 +11,7 @@ public class InputComponent implements Component
 
 	public InputComponent()
 	{
+		// TODO: Replace with legitimate
 		inputs = new InputContainer();
 		Gdx.input.setInputProcessor(new KeyboardInput(inputs));
 	}

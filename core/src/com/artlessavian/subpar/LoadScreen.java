@@ -1,6 +1,5 @@
 package com.artlessavian.subpar;
 
-import com.artlessavian.subpar.fight.FightScreen;
 import com.badlogic.gdx.Screen;
 
 public class LoadScreen implements Screen

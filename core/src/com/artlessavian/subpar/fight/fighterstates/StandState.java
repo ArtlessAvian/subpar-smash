@@ -1,7 +1,6 @@
 package com.artlessavian.subpar.fight.fighterstates;
 
 import com.artlessavian.subpar.State;
-import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -17,7 +16,7 @@ public class StandState extends State
 	@Override
 	public void exit()
 	{
-	
+
 	}
 
 	@Override

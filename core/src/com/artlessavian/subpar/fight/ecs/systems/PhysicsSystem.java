@@ -6,9 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 
 public class PhysicsSystem extends EntitySystem
 {
@@ -66,7 +64,7 @@ public class PhysicsSystem extends EntitySystem
 			{
 				if (extraPhysicsC != null && physicsC.vel.y + physicsC.acc.y * deltaTime < -extraPhysicsC.maxFallSpeed)
 				{
-					float t = Math.abs(physicsC.vel.y + extraPhysicsC.maxFallSpeed)/Math.abs(physicsC.acc.y);
+					float t = Math.abs(physicsC.vel.y + extraPhysicsC.maxFallSpeed) / Math.abs(physicsC.acc.y);
 					physicsC.pos.y += physicsC.vel.y * t + physicsC.acc.y * t * t / 2f;
 					physicsC.vel.y = -extraPhysicsC.maxFallSpeed;
 					physicsC.acc.y = 0;
