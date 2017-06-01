@@ -36,69 +36,50 @@ public class PhysicsSystem extends EntitySystem
 
 			physicsC.lastPos.set(physicsC.pos);
 
-			// projectile motion with speed limits
-			if (extraPhysicsC == null)
-			{
-				projectileMovementX(physicsC, deltaTime);
-			}
-			else
-			{
-				if (physicsC.vel.x > extraPhysicsC.maxXSpeed) {physicsC.vel.x = extraPhysicsC.maxXSpeed;}
-				if (physicsC.vel.x < -extraPhysicsC.maxXSpeed) {physicsC.vel.x = -extraPhysicsC.maxXSpeed;}
-				if (Math.abs(physicsC.vel.x + physicsC.acc.x * deltaTime) > extraPhysicsC.maxXSpeed)
-				{
-					float t = Math.abs(Math.abs(physicsC.vel.x) - extraPhysicsC.maxXSpeed) / Math.abs(physicsC.acc.x);
-					projectileMovementX(physicsC, t);
-					physicsC.vel.x = Math.signum(physicsC.acc.x * deltaTime + physicsC.vel.x) * extraPhysicsC.maxXSpeed;
-					physicsC.acc.x = 0;
-					projectileMovementX(physicsC, deltaTime - t);
-				}
-				else
-				{
-					projectileMovementX(physicsC, deltaTime);
-				}
-			}
-
-			// repeat for y component, kinda
-
-			if (extraPhysicsC == null)
-			{
-				projectileMovementY(physicsC, deltaTime);
-			}
-			else if (extraPhysicsC.grounded)
-			{
-
-			}
-			else
-			{
-				if (physicsC.vel.y < -extraPhysicsC.maxFallSpeed) {physicsC.vel.x = -extraPhysicsC.maxFallSpeed;}
-				if (physicsC.vel.y + physicsC.acc.y * deltaTime < -extraPhysicsC.maxFallSpeed)
-				{
-					float t = Math.abs(physicsC.vel.y + extraPhysicsC.maxFallSpeed) / Math.abs(physicsC.acc.y);
-					projectileMovementY(physicsC, t);
-					physicsC.vel.y = -extraPhysicsC.maxFallSpeed;
-					physicsC.acc.y = 0;
-					projectileMovementY(physicsC, deltaTime - t);
-				}
-				else
-				{
-					projectileMovementY(physicsC, deltaTime);
-				}
-			}
+			doMovement(deltaTime, physicsC, extraPhysicsC);
 
 			physicsC.acc.set(0,0);
 		}
 	}
 
-	public static void projectileMovementX(PhysicsComponent physicsC, float deltaTime)
+	public static void doMovement(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
-		physicsC.pos.x += physicsC.vel.x * deltaTime + physicsC.acc.x * deltaTime * deltaTime / 2f;
-		physicsC.vel.x += physicsC.acc.x * deltaTime;
+		projectileMovementX(deltaTime, physicsC, extraPhysicsC);
+		projectileMovementY(deltaTime, physicsC, extraPhysicsC);
 	}
 
-	public static void projectileMovementY(PhysicsComponent physicsC, float deltaTime)
+	public static void projectileMovementX(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
-		physicsC.pos.y += physicsC.vel.y * deltaTime + physicsC.acc.y * deltaTime * deltaTime / 2f;
-		physicsC.vel.y += physicsC.acc.y * deltaTime;
+		float projectedXVel = physicsC.vel.x + physicsC.acc.x * deltaTime;
+
+		if (extraPhysicsC != null)
+		{
+			// TODO: consider friction
+			if (projectedXVel > extraPhysicsC.maxXSpeed) {projectedXVel = extraPhysicsC.maxXSpeed;}
+			if (projectedXVel < -extraPhysicsC.maxXSpeed) {projectedXVel = -extraPhysicsC.maxXSpeed;}
+		}
+
+		physicsC.pos.x += (physicsC.vel.x + projectedXVel) / 2f * deltaTime;
+		physicsC.vel.x = projectedXVel;
+	}
+
+	public static void projectileMovementY(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
+	{
+		float projectedYVel = physicsC.vel.y + physicsC.acc.y * deltaTime;
+
+		if (extraPhysicsC != null)
+		{
+			if (!extraPhysicsC.grounded)
+			{
+				if (projectedYVel < -extraPhysicsC.maxFallSpeed) {projectedYVel = -extraPhysicsC.maxFallSpeed;}
+			}
+			else
+			{
+				physicsC.vel.y = 0;
+			}
+		}
+
+		physicsC.pos.y += (physicsC.vel.x + projectedYVel) / 2f * deltaTime;
+		physicsC.vel.y = projectedYVel;
 	}
 }
