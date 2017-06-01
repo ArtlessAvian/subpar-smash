@@ -1,6 +1,7 @@
 package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
+import com.artlessavian.subpar.fight.ecs.components.ExtraPhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.SpriteComponent;
 import com.badlogic.ashley.core.Entity;
@@ -10,6 +11,7 @@ public class Fighter extends Entity
 {
 	SpriteComponent spriteC;
 	PhysicsComponent physicsC;
+	ExtraPhysicsComponent extraPhysicsC;
 
 	public Fighter(SubparMain main)
 	{
@@ -23,9 +25,14 @@ public class Fighter extends Entity
 
 		// cut this if replacing with factory
 		f.physicsC = new PhysicsComponent();
-		f.physicsC.pos.set(10, 0);
-		f.physicsC.vel.set(100, 100);
+		f.physicsC.pos.set(0, 10);
+		f.physicsC.vel.set(50, 100);
 		f.add(f.physicsC);
+
+		f.extraPhysicsC = new ExtraPhysicsComponent();
+		f.extraPhysicsC.maxXSpeed = 40;
+		f.extraPhysicsC.maxFallSpeed = 40;
+		f.add(f.extraPhysicsC);
 
 		f.spriteC = new SpriteComponent(main.assetManager.get("icon.png", Texture.class));
 		f.add(f.spriteC);

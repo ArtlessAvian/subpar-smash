@@ -1,7 +1,5 @@
 package com.artlessavian.subpar;
 
-import com.artlessavian.subpar.fight.FightScreen;
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 
 public class SubparMain extends Game
@@ -24,9 +21,12 @@ public class SubparMain extends Game
 
 	public SpriteBatch spriteBatch;
 	public BitmapFont bitmapFont;
-
-	private Sprite debuggg;
 	public AssetManager assetManager;
+
+
+
+	private Sprite debugCircle;
+	private Sprite debugTriangle;
 
 	@Override
 	public void create()
@@ -91,10 +91,10 @@ public class SubparMain extends Game
 			bitmapFont.setColor(1, 1, 1, 0.5f);
 			bitmapFont.setFixedWidthGlyphs("1234567890.");
 		}
-		if (debuggg == null)
+		if (debugCircle == null)
 		{
-			debuggg = new Sprite(new Texture("icon.png"));
-			debuggg.setAlpha(0.4f);
+			debugCircle = new Sprite(new Texture("icon.png"));
+			debugCircle.setAlpha(0.4f);
 		}
 		if (assetManager == null)
 		{
@@ -112,7 +112,7 @@ public class SubparMain extends Game
 	@Override
 	public void dispose()
 	{
-		debuggg.getTexture().dispose();
+		debugCircle.getTexture().dispose();
 		spriteBatch.dispose();
 		bitmapFont.dispose();
 		assetManager.dispose();
@@ -122,20 +122,20 @@ public class SubparMain extends Game
 
 	public void debugLine(float ax, float ay, float bx, float by)
 	{
-		debuggg.setCenterX(ax);
-		debuggg.setCenterY(ay);
-		debuggg.draw(spriteBatch);
+		debugCircle.setCenterX(ax);
+		debugCircle.setCenterY(ay);
+		debugCircle.draw(spriteBatch);
 		for (int i = 0; i < 7; i++)
 		{
-			debuggg.translateX((bx - ax) / 7);
-			debuggg.translateY((by - ay) / 7);
-			debuggg.draw(spriteBatch);
+			debugCircle.translateX((bx - ax) / 7);
+			debugCircle.translateY((by - ay) / 7);
+			debugCircle.draw(spriteBatch);
 		}
 	}
 
 	public void debugCircle(float x, float y, float diameter)
 	{
-		spriteBatch.draw(debuggg, x - diameter / 2, y - diameter / 2, diameter, diameter);
+		spriteBatch.draw(debugCircle, x - diameter / 2, y - diameter / 2, diameter, diameter);
 	}
 
 	public void debugRect(Rectangle r)

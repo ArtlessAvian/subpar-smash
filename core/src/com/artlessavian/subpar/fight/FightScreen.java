@@ -2,6 +2,7 @@ package com.artlessavian.subpar.fight;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
+import com.artlessavian.subpar.fight.ecs.systems.CollisionSystem;
 import com.artlessavian.subpar.fight.ecs.systems.DrawSystem;
 import com.artlessavian.subpar.fight.ecs.systems.PhysicsSystem;
 import com.badlogic.ashley.core.Engine;
@@ -22,6 +23,7 @@ public class FightScreen implements Screen
 
 		engine = new Engine();
 		engine.addSystem(new PhysicsSystem());
+		engine.addSystem(new CollisionSystem());
 
 		drawSystem = new DrawSystem(main, this);
 		engine.addSystem(drawSystem);
@@ -38,7 +40,7 @@ public class FightScreen implements Screen
 
 	boolean timeStop;
 	float rollover;
-	float deltaTime = 1/60f/4f;
+	float deltaTime = 1/60f;
 	long engineRuns = 0;
 
 	@Override

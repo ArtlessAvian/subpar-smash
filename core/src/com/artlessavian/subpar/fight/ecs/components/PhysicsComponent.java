@@ -6,14 +6,16 @@ import com.badlogic.gdx.utils.Pool;
 
 public class PhysicsComponent implements Component
 {
+	public Vector2 lastPos;
 	public Vector2 pos;
 	public Vector2 vel;
 	public Vector2 acc;
 
 	public PhysicsComponent()
 	{
-		pos = new Vector2();
-		vel = new Vector2();
-		acc = new Vector2();
+		lastPos = new Vector2(0, 0);
+		pos = new Vector2(0, 0);
+		vel = new Vector2(0, 0);
+		acc = new Vector2(0, 0);
 	}
 }

@@ -11,8 +11,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 
 public class DrawSystem extends EntitySystem
 {
@@ -43,7 +43,6 @@ public class DrawSystem extends EntitySystem
 		camPos = new Vector2();
 
 		entities = engine.getEntitiesFor(Family.all(SpriteComponent.class).get());
-		setProcessing(false);
 	}
 
 	public void resize()
@@ -51,7 +50,7 @@ public class DrawSystem extends EntitySystem
 		cam.viewportWidth = 720 * Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
 	}
 
-	public void doScreenShake(float time, float strength)
+	public void shakeScreen(float time, float strength)
 	{
 		screenShakeTime = time;
 		screenShakeAmount = strength;
@@ -60,18 +59,7 @@ public class DrawSystem extends EntitySystem
 	@Override
 	public void update(float rollover)
 	{
-		cam.position.x = camPos.x;
-		cam.position.y = camPos.y;
-		if (screenShakeTime > 0)
-		{
-			cam.translate(
-				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier,
-				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier
-			);
-			screenShakeTime--;
-		}
-		cam.update();
-
+		shakeScreen();
 		main.spriteBatch.setProjectionMatrix(cam.combined);
 //		game.stage.draw(main.batch);
 
@@ -84,9 +72,31 @@ public class DrawSystem extends EntitySystem
 			moveToPosition(spriteC, physicsC);
 
 			spriteC.sprite.draw(main.spriteBatch);
+
+			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.x + "", 100, 100);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.vel.y + "", 100, 150);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 100, 200);
+			main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 100, 250);
+
+			main.debugLine(-300, 0, 300, 0);
 		}
 
-		main.debugLine(0, 0, 10, 10);
+//		main.debugLine(0, 0, (float)Math.random() * 100, (float)Math.random() * 100);
+	}
+
+	public void shakeScreen()
+	{
+		cam.position.x = camPos.x;
+		cam.position.y = camPos.y;
+		if (screenShakeTime > 0)
+		{
+			cam.translate(
+				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier,
+				(float)(Math.random()*2-1) * screenShakeAmount * screenShakeMultiplier
+			);
+			screenShakeTime--;
+		}
+		cam.update();
 	}
 
 	public void moveToPosition(SpriteComponent spriteC, PhysicsComponent physicsC)
