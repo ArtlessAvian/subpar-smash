@@ -42,13 +42,13 @@ public class PhysicsSystem extends EntitySystem
 		}
 	}
 
-	public static void doMovement(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
+	private static void doMovement(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
 		projectileMovementX(deltaTime, physicsC, extraPhysicsC);
 		projectileMovementY(deltaTime, physicsC, extraPhysicsC);
 	}
 
-	public static void projectileMovementX(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
+	private static void projectileMovementX(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
 		float projectedXVel = physicsC.vel.x + physicsC.acc.x * deltaTime;
 
@@ -63,7 +63,7 @@ public class PhysicsSystem extends EntitySystem
 		physicsC.vel.x = projectedXVel;
 	}
 
-	public static void projectileMovementY(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
+	private static void projectileMovementY(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
 		float projectedYVel = physicsC.vel.y + physicsC.acc.y * deltaTime;
 
@@ -79,7 +79,7 @@ public class PhysicsSystem extends EntitySystem
 			}
 		}
 
-		physicsC.pos.y += (physicsC.vel.x + projectedYVel) / 2f * deltaTime;
+		physicsC.pos.y += (physicsC.vel.y + projectedYVel) / 2f * deltaTime;
 		physicsC.vel.y = projectedYVel;
 	}
 }
