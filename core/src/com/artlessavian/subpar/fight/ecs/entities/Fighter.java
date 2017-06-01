@@ -2,6 +2,7 @@ package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.components.ExtraPhysicsComponent;
+import com.artlessavian.subpar.fight.ecs.components.InputComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.SpriteComponent;
 import com.badlogic.ashley.core.Entity;
@@ -12,6 +13,7 @@ public class Fighter extends Entity
 	SpriteComponent spriteC;
 	PhysicsComponent physicsC;
 	ExtraPhysicsComponent extraPhysicsC;
+	InputComponent inputC;
 
 	public Fighter(SubparMain main)
 	{
@@ -33,6 +35,9 @@ public class Fighter extends Entity
 		f.extraPhysicsC.maxXSpeed = 40;
 		f.extraPhysicsC.maxFallSpeed = 40;
 		f.add(f.extraPhysicsC);
+
+		f.inputC = new InputComponent();
+		f.add(f.inputC);
 
 		f.spriteC = new SpriteComponent(main.assetManager.get("icon.png", Texture.class));
 		f.add(f.spriteC);

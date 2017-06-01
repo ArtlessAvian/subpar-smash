@@ -34,7 +34,7 @@ public class PhysicsSystem extends EntitySystem
 			ExtraPhysicsComponent extraPhysicsC = entity.getComponent(ExtraPhysicsComponent.class);
 
 //			physicsC.acc.set((float)Math.cos(Gdx.graphics.getFrameId() / 60f) * 60, (float)Math.sin(Gdx.graphics.getFrameId() / 60f) * 60);
-			physicsC.acc.set(0, -100);
+//			physicsC.acc.set(0, -100);
 
 			physicsC.lastPos.set(physicsC.pos);
 

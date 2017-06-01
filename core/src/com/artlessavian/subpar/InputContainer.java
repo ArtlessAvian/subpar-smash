@@ -1,13 +1,14 @@
 package com.artlessavian.subpar;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class InputContainer
 {
-	float x = 0; //
-	float y = 0;
-	boolean aPressed;
-	boolean bPressed;
-	boolean xPressed;
-	boolean yPressed;
-	boolean lPresesd;
-	boolean rPressed;
+	public Vector2 main = new Vector2();
+	public boolean aPressed;
+	public boolean bPressed;
+	public boolean xPressed;
+	public boolean yPressed;
+	public boolean lPresesd;
+	public boolean rPressed;
 }
