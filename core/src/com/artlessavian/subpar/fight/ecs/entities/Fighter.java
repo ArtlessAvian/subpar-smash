@@ -39,7 +39,7 @@ public class Fighter extends Entity
 		f.inputC = new InputComponent();
 		f.add(f.inputC);
 
-		f.spriteC = new SpriteComponent(main.assetManager.get("icon.png", Texture.class));
+		f.spriteC = new SpriteComponent(main.assetManager.get("Debug/Grid.png", Texture.class));
 		f.add(f.spriteC);
 
 		return f;

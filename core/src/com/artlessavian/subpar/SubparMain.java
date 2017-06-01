@@ -100,6 +100,7 @@ public class SubparMain extends Game
 		{
 			assetManager = new AssetManager();
 			assetManager.load("icon.png", Texture.class);
+			assetManager.load("Debug/Grid.png", Texture.class);
 			assetManager.load("Prototype/Fox.png", Texture.class);
 			assetManager.load("Prototype/Falco.png", Texture.class);
 			assetManager.load("Prototype/map2 - Copy.png", Texture.class);
@@ -145,5 +146,4 @@ public class SubparMain extends Game
 		debugLine(r.x + r.width, r.y + r.height, r.x, r.y + r.height);
 		debugLine(r.x, r.y + r.height, r.x, r.y);
 	}
-
 }
