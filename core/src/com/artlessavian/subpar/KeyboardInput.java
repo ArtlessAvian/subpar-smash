@@ -15,7 +15,7 @@ public class KeyboardInput extends InputAdapter
 	@Override
 	public boolean keyDown(int keycode)
 	{
-		System.out.println(keycode);
+//		System.out.println(keycode);
 		switch (keycode)
 		{
 			case Input.Keys.W:

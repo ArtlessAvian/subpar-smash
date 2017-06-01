@@ -28,12 +28,12 @@ public class Fighter extends Entity
 		// cut this if replacing with factory
 		f.physicsC = new PhysicsComponent();
 		f.physicsC.pos.set(0, 10);
-		f.physicsC.vel.set(50, 100);
+		f.physicsC.vel.set(0, 0);
 		f.add(f.physicsC);
 
 		f.extraPhysicsC = new ExtraPhysicsComponent();
-		f.extraPhysicsC.maxXSpeed = 40;
-		f.extraPhysicsC.maxFallSpeed = 40;
+		f.extraPhysicsC.maxXSpeed = 300;
+		f.extraPhysicsC.maxFallSpeed = 300;
 		f.add(f.extraPhysicsC);
 
 		f.inputC = new InputComponent();
