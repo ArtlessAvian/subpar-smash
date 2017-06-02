@@ -8,12 +8,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 
+import java.util.ArrayList;
+
 public class FightScreen implements Screen
 {
 	SubparMain main;
 	Engine engine;
 
 	DrawSystem drawSystem;
+	GUIDrawSystem guiDrawSystem;
+	DebugDrawSystem debugDrawSystem;
+
+	public Stage stage;
+	ArrayList<Fighter> fighters;
 
 	public FightScreen(SubparMain main)
 	{
@@ -27,9 +34,18 @@ public class FightScreen implements Screen
 
 		drawSystem = new DrawSystem(main, this);
 		engine.addSystem(drawSystem);
+		guiDrawSystem = new GUIDrawSystem(main, this, drawSystem);
+		engine.addSystem(guiDrawSystem);
+		debugDrawSystem = new DebugDrawSystem(main, this, drawSystem);
+		engine.addSystem(debugDrawSystem);
+
+		stage = new Stage(main, this);
+
+		fighters = new ArrayList<Fighter>();
 
 		Fighter f = new Fighter(main);
 		engine.addEntity(f);
+		fighters.add(f);
 	}
 
 	@Override
@@ -59,6 +75,8 @@ public class FightScreen implements Screen
 		}
 
 		drawSystem.update(0);
+		guiDrawSystem.update(0);
+		debugDrawSystem.update(0);
 	}
 
 	@Override

@@ -14,4 +14,5 @@ public class ExtraPhysicsComponent implements Component
 	public float maxFallSpeed = Float.POSITIVE_INFINITY;
 
 	public float frictionAcc = 0; // acts opposite to motion
+	public float gravityAcc = 0; // acts down
 }

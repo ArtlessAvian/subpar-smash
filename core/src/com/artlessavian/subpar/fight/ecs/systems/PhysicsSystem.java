@@ -34,6 +34,8 @@ public class PhysicsSystem extends EntitySystem
 //			physicsC.acc.set((float)Math.cos(Gdx.graphics.getFrameId() / 60f) * 60, (float)Math.sin(Gdx.graphics.getFrameId() / 60f) * 60);
 //			physicsC.acc.set(0, -100);
 
+//			physicsC.vel.add((float)(Math.random() * 100 - 50), 0);
+
 			physicsC.lastPos.set(physicsC.pos);
 
 			doMovement(deltaTime, physicsC, extraPhysicsC);
@@ -50,6 +52,7 @@ public class PhysicsSystem extends EntitySystem
 
 	private static void projectileMovementX(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
+		// Will underestimate acceleration, and overestimate deceleration
 		float projectedXVel = physicsC.vel.x + physicsC.acc.x * deltaTime;
 
 		if (extraPhysicsC != null)
@@ -65,17 +68,18 @@ public class PhysicsSystem extends EntitySystem
 
 	private static void projectileMovementY(float deltaTime, PhysicsComponent physicsC, ExtraPhysicsComponent extraPhysicsC)
 	{
+		// Will underestimate acceleration, and overestimate deceleration
 		float projectedYVel = physicsC.vel.y + physicsC.acc.y * deltaTime;
 
 		if (extraPhysicsC != null)
 		{
-			if (!extraPhysicsC.grounded)
+			if (extraPhysicsC.grounded)
 			{
-				if (projectedYVel < -extraPhysicsC.maxFallSpeed) {projectedYVel = -extraPhysicsC.maxFallSpeed;}
+				physicsC.vel.y = 0;
 			}
 			else
 			{
-				physicsC.vel.y = 0;
+				if (projectedYVel < -extraPhysicsC.maxFallSpeed) {projectedYVel = -extraPhysicsC.maxFallSpeed;}
 			}
 		}
 

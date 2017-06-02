@@ -47,7 +47,7 @@ public class SubparMain extends Game
 		super.render();
 
 		spriteBatch.setProjectionMatrix(screenSpace.combined);
-		bitmapFont.draw(spriteBatch, this.screen.getClass().getSimpleName(), 6, 18);
+		bitmapFont.draw(spriteBatch, this.screen.getClass().getSimpleName(), 6, 700);
 
 		spriteBatch.end();
 	}
