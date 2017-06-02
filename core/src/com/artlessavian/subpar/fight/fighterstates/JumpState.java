@@ -4,11 +4,11 @@ import com.artlessavian.subpar.State;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class StandState extends State
+public class JumpState extends State
 {
-	final Fighter fighter;
+	Fighter fighter;
 
-	public StandState(Fighter fighter)
+	public JumpState(Fighter fighter)
 	{
 		this.fighter = fighter;
 	}
@@ -22,27 +22,19 @@ public class StandState extends State
 	@Override
 	public void enter()
 	{
-
+		fighter.physicsC.vel.add(0, 1000);
 	}
 
 	@Override
 	public boolean changeStateMaybe()
 	{
-		if (fighter.inputC.inputs.main.x != 0)
-		{
-			sm.gotoState(WalkState.class);
-		}
-		if (fighter.inputC.inputs.main.y == 1)
-		{
-			sm.gotoState(JumpState.class);
-		}
 		return false;
 	}
 
 	@Override
 	public void doStuff()
 	{
-//		fighter.physicsC.friction(1);
+
 	}
 
 	@Override

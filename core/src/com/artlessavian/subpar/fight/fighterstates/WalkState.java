@@ -32,6 +32,10 @@ public class WalkState extends State
 		{
 			sm.gotoState(StandState.class);
 		}
+		if (fighter.inputC.inputs.main.y == 1)
+		{
+			sm.gotoState(JumpState.class);
+		}
 		return false;
 	}
 

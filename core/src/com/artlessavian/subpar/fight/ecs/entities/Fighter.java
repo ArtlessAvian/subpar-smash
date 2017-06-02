@@ -2,6 +2,7 @@ package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.components.*;
+import com.artlessavian.subpar.fight.fighterstates.JumpState;
 import com.artlessavian.subpar.fight.fighterstates.StandState;
 import com.artlessavian.subpar.fight.fighterstates.WalkState;
 import com.badlogic.ashley.core.Entity;
@@ -53,6 +54,7 @@ public class Fighter extends Entity
 	{
 		stateC.machine.addState(new StandState(f));
 		stateC.machine.addState(new WalkState(f));
+		stateC.machine.addState(new JumpState(f));
 		stateC.machine.gotoState(StandState.class);
 	}
 }
