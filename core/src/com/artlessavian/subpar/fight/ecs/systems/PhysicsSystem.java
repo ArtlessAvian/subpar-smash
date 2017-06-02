@@ -57,7 +57,17 @@ public class PhysicsSystem extends EntitySystem
 
 		if (extraPhysicsC != null)
 		{
-			// TODO: consider friction
+			// TODO: Figure out if this lazy friction is ok
+			float projectedXVelFriction = extraPhysicsC.frictionAcc * deltaTime + projectedXVel;
+			if (projectedXVel * projectedXVelFriction < 0)
+			{
+				projectedXVel = 0;
+			}
+			else
+			{
+				projectedXVel = projectedXVelFriction;
+			}
+
 			if (projectedXVel > extraPhysicsC.maxXSpeed) {projectedXVel = extraPhysicsC.maxXSpeed;}
 			if (projectedXVel < -extraPhysicsC.maxXSpeed) {projectedXVel = -extraPhysicsC.maxXSpeed;}
 		}
@@ -73,6 +83,8 @@ public class PhysicsSystem extends EntitySystem
 
 		if (extraPhysicsC != null)
 		{
+			projectedYVel -= extraPhysicsC.gravityAcc * deltaTime;
+
 			if (extraPhysicsC.grounded)
 			{
 				physicsC.vel.y = 0;

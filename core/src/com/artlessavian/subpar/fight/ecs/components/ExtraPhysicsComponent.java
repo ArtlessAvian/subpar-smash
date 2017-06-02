@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Component;
 public class ExtraPhysicsComponent implements Component
 {
 	public boolean grounded;
-	public float passiveGravity;
 
 	public boolean facingLeft; // flipped
 
@@ -14,5 +13,5 @@ public class ExtraPhysicsComponent implements Component
 	public float maxFallSpeed = Float.POSITIVE_INFINITY;
 
 	public float frictionAcc = 0; // acts opposite to motion
-	public float gravityAcc = 0; // acts down
+	public float gravityAcc = 10; // acts down
 }
