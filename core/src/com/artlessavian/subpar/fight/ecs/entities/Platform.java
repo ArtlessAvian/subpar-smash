@@ -1,9 +1,9 @@
 package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
-import com.artlessavian.subpar.fight.ecs.components.*;
+import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
+import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Texture;
 
 public class Platform extends Entity
 {

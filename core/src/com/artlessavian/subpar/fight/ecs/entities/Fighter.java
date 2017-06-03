@@ -35,21 +35,25 @@ public class Fighter extends Entity
 		f.add(f.physicsC);
 
 		f.extraPhysicsC = new ExtraPhysicsComponent();
-		f.extraPhysicsC.maxXSpeed = 1000;
-		f.extraPhysicsC.maxFallSpeed = 1000;
+		f.extraPhysicsC.maxXSpeed = 600;
+		f.extraPhysicsC.maxFallSpeed = 2000;
+		f.extraPhysicsC.frictionAcc = 100;
 		f.add(f.extraPhysicsC);
 
 		f.stateC = new StateComponent();
 		addStates(f, f.stateC);
 		f.add(f.stateC);
 
-		f.collisionC = new CollisionComponent(new FighterCollisionBehavior(), 64, 64);
+		f.collisionC = new CollisionComponent(new FighterCollisionBehavior(), 256, 128);
 		f.add(f.collisionC);
 
 		f.inputC = new InputComponent();
 		f.add(f.inputC);
 
-		f.spriteC = new SpriteComponent(main.assetManager.get("Debug/Grid.png", Texture.class));
+		f.spriteC = new SpriteComponent(main.assetManager.get("Prototype/Fox.png", Texture.class));
+		f.spriteC.sprite.setSize(256, 256);
+		f.spriteC.sprite.setU2(1/4f);
+		f.spriteC.sprite.setV2(1/4f);
 		f.add(f.spriteC);
 
 		return f;
@@ -85,7 +89,7 @@ public class Fighter extends Entity
 
 			f.physicsC.pos.y = rectangle.y + rectangle.height - f.collisionC.diamond.bottomY;
 
-			f.extraPhysicsC.ground = platform.getComponent(PlatformComponent.class).rectangle;
+			f.extraPhysicsC.ground = platform.getComponent(PlatformComponent.class).bounds;
 
 			// TODO: Replace with Landing/LandingLag
 			f.stateC.machine.gotoState(StandState.class);
@@ -97,7 +101,7 @@ public class Fighter extends Entity
 			// TODO: Testing, Replace me
 			Fighter f = (Fighter)thisEntity;
 
-			f.physicsC.vel.x = 10;
+			f.physicsC.vel.x = 0;
 			f.physicsC.acc.x = 0;
 			f.physicsC.pos.x = rectangle.x + rectangle.width - f.collisionC.diamond.leftX;
 		}
@@ -108,7 +112,7 @@ public class Fighter extends Entity
 			// TODO: Testing, Replace me
 			Fighter f = (Fighter)thisEntity;
 
-			f.physicsC.vel.x = -10;
+			f.physicsC.vel.x = 0;
 			f.physicsC.acc.x = 0;
 			f.physicsC.pos.x = rectangle.x - f.collisionC.diamond.rightX;
 		}
@@ -118,6 +122,17 @@ public class Fighter extends Entity
 		{
 			// TODO: Testing, Replace me
 			((Fighter)thisEntity).extraPhysicsC.ground = null;
+		}
+
+		@Override
+		public void onAnyCollision(Rectangle rectangle, Entity thisEntity, Entity platform)
+		{
+			PhysicsComponent physicsC = ((Fighter)thisEntity).physicsC;
+			CollisionComponent collisionC = ((Fighter)thisEntity).collisionC;
+			collisionC.movementRect.x = Math.min(physicsC.pos.x, physicsC.lastPos.x);
+			collisionC.movementRect.y = Math.min(physicsC.pos.y, physicsC.lastPos.y);
+			collisionC.movementRect.width = Math.abs(physicsC.pos.x - physicsC.lastPos.x);
+			collisionC.movementRect.height = Math.abs(physicsC.pos.y - physicsC.lastPos.y);
 		}
 	}
 }

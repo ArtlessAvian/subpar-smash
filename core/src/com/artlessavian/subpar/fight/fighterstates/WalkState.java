@@ -22,7 +22,7 @@ public class WalkState extends State
 	@Override
 	public void enter()
 	{
-
+		fighter.extraPhysicsC.frictionAcc = 0;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class WalkState extends State
 	@Override
 	public void doStuff()
 	{
-		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 300, 0);
+		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 1800, 0);
 	}
 
 	@Override

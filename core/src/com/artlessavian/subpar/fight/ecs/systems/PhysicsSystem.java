@@ -41,7 +41,7 @@ public class PhysicsSystem extends EntitySystem
 
 			doMovement(deltaTime, physicsC, extraPhysicsC);
 
-			physicsC.acc.set(0,0);
+			physicsC.acc.set(0, 0);
 
 			CollisionComponent collisionC = entity.getComponent(CollisionComponent.class);
 			if (collisionC != null)
@@ -68,7 +68,7 @@ public class PhysicsSystem extends EntitySystem
 		if (extraPhysicsC != null)
 		{
 			// TODO: Figure out if this lazy friction is ok
-			float projectedXVelFriction = extraPhysicsC.frictionAcc * deltaTime + projectedXVel;
+			float projectedXVelFriction = -Math.signum(projectedXVel) * extraPhysicsC.frictionAcc * deltaTime + projectedXVel;
 			if (projectedXVel * projectedXVelFriction < 0)
 			{
 				projectedXVel = 0;

@@ -1,17 +1,21 @@
 package com.artlessavian.subpar.fight.ecs.systems;
 
-import com.artlessavian.subpar.fight.ecs.components.*;
-import com.artlessavian.subpar.fight.fighterstates.StandState;
+import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
+import com.artlessavian.subpar.fight.ecs.components.ExtraPhysicsComponent;
+import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
+import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.math.Rectangle;
 
 public class CollisionSystem extends EntitySystem
 {
 	private ImmutableArray<Entity> entities;
 	private ImmutableArray<Entity> platforms;
+	private Rectangle dirtyRectangle = new Rectangle();
 
 	@Override
 	public void addedToEngine(Engine engine)
@@ -33,59 +37,83 @@ public class CollisionSystem extends EntitySystem
 				PlatformComponent platformC = platform.getComponent(PlatformComponent.class);
 
 				// Left Side
-				collisionC.movementRect.x += collisionC.diamond.leftX;
-				if (collisionC.movementRect.overlaps(platformC.rectangle))
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.x += collisionC.diamond.leftX;
+				dirtyRectangle.y += collisionC.diamond.bottomHorizontalY;
+				if (dirtyRectangle.overlaps(platformC.bounds))
 				{
 					System.out.println("onTouchLeft");
-					collisionC.behavior.onTouchLeft(platformC.rectangle, entity, platform);
+					collisionC.behavior.onTouchLeft(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
 				}
-				collisionC.movementRect.x -= collisionC.diamond.leftX;
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.x += collisionC.diamond.leftX;
+				dirtyRectangle.y += collisionC.diamond.topHorizontalY;
+				if (dirtyRectangle.overlaps(platformC.bounds))
+				{
+					System.out.println("onTouchLeft");
+					collisionC.behavior.onTouchLeft(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
+				}
 
 				// Right Side
-				collisionC.movementRect.x += collisionC.diamond.rightX;
-				if (collisionC.movementRect.overlaps(platformC.rectangle))
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.x += collisionC.diamond.rightX;
+				dirtyRectangle.y += collisionC.diamond.bottomHorizontalY;
+				if (dirtyRectangle.overlaps(platformC.bounds))
 				{
 					System.out.println("onTouchRight");
-					collisionC.behavior.onTouchRight(platformC.rectangle, entity, platform);
+					collisionC.behavior.onTouchRight(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
 				}
-				collisionC.movementRect.x -= collisionC.diamond.rightX;
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.x += collisionC.diamond.rightX;
+				dirtyRectangle.y += collisionC.diamond.topHorizontalY;
+				if (dirtyRectangle.overlaps(platformC.bounds))
+				{
+					System.out.println("onTouchRight");
+					collisionC.behavior.onTouchRight(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
+				}
 
 				// Check ground for falling off
 				if (extraPhysicsC != null && extraPhysicsC.ground != null)
 				{
-					collisionC.movementRect.y += collisionC.diamond.bottomY - 1;
-					if (!collisionC.movementRect.overlaps(extraPhysicsC.ground))
+					dirtyRectangle.set(collisionC.movementRect);
+					dirtyRectangle.y += collisionC.diamond.bottomY - 1;
+					if (!dirtyRectangle.overlaps(extraPhysicsC.ground))
 					{
 						System.out.println("onEdge");
 						collisionC.behavior.onEdge(extraPhysicsC.ground, entity);
 					}
-					collisionC.movementRect.y -= collisionC.diamond.bottomY - 1;
 				}
 
 				// Bottom Side
-				collisionC.movementRect.y += collisionC.diamond.bottomY + 1;
-				if (collisionC.movementRect.overlaps(platformC.rectangle))
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.y += collisionC.diamond.bottomY + 1;
+				if (dirtyRectangle.overlaps(platformC.bounds))
 				{
 					System.out.println("onTouchFloor");
-					collisionC.behavior.onTouchFloor(platformC.rectangle, entity, platform);
+					collisionC.behavior.onTouchFloor(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
 				}
-				collisionC.movementRect.y -= collisionC.diamond.bottomY + 1;
 
 				// Top Side
-				collisionC.movementRect.y += collisionC.diamond.topY;
-				if (collisionC.movementRect.overlaps(platformC.rectangle))
+				dirtyRectangle.set(collisionC.movementRect);
+				dirtyRectangle.y += collisionC.diamond.topY;
+				if (dirtyRectangle.overlaps(platformC.bounds))
 				{
 					System.out.println("onTouchCeil");
-					collisionC.behavior.onTouchCeil(platformC.rectangle, entity, platform);
+					collisionC.behavior.onTouchCeil(platformC.bounds, entity, platform);
+					collisionC.behavior.onAnyCollision(platformC.bounds, entity, platform);
 				}
-				collisionC.movementRect.y -= collisionC.diamond.topY;
 
 
 			}
 
 			if (collisionC.movementRect.y < -100)
 			{
-				entity.getComponent(PhysicsComponent.class).pos.set(0, 100);
+				entity.getComponent(PhysicsComponent.class).pos.set(0, 400);
 			}
 		}
 	}

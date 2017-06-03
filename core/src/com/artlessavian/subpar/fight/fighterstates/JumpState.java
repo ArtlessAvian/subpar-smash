@@ -23,7 +23,14 @@ public class JumpState extends State
 	public void enter()
 	{
 		fighter.extraPhysicsC.ground = null;
-		fighter.physicsC.vel.add(0, 1000);
+		if (Math.random() < 0.5)
+		{
+			fighter.physicsC.vel.add(0, 2000);
+		}
+		else
+		{
+			fighter.physicsC.vel.add(0, 1500);
+		}
 	}
 
 	@Override
@@ -35,7 +42,7 @@ public class JumpState extends State
 	@Override
 	public void doStuff()
 	{
-
+		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 10 * 60, 0);
 	}
 
 	@Override

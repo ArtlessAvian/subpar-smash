@@ -22,7 +22,7 @@ public class StandState extends State
 	@Override
 	public void enter()
 	{
-
+		fighter.extraPhysicsC.frictionAcc = 200;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class TimeLogger
 
 			lol.put(key, longs);
 		}
-		longs[0] = System.nanoTime() - logInTimeStack.remove(logInTimeStack.size()-1);
+		longs[0] = System.nanoTime() - logInTimeStack.remove(logInTimeStack.size() - 1);
 		longs[1] = Math.max(longs[0], longs[1]);
 		longs[(int)(longs[2] % LOGLENGTH) + 3] = longs[0];
 		longs[2]++;

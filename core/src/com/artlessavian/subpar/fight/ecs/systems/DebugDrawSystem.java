@@ -5,15 +5,10 @@ import com.artlessavian.subpar.fight.FightScreen;
 import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
-import com.artlessavian.subpar.fight.ecs.components.SpriteComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 
 public class DebugDrawSystem extends EntitySystem
 {
@@ -46,17 +41,19 @@ public class DebugDrawSystem extends EntitySystem
 			CollisionComponent collisionC = entity.getComponent(CollisionComponent.class);
 			if (collisionC != null)
 			{
-//				main.debugLine(physicsC.pos.x, physicsC.pos.y + collisionC.diamond.topY,
-//					physicsC.pos.x, physicsC.pos.y + collisionC.diamond.bottomY);
-//				main.debugLine(physicsC.pos.x + collisionC.diamond.leftX, physicsC.pos.y,
-//					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y);
+				main.debugLine(physicsC.pos.x, physicsC.pos.y + collisionC.diamond.topY,
+					physicsC.pos.x, physicsC.pos.y + collisionC.diamond.bottomY);
+				main.debugLine(physicsC.pos.x + collisionC.diamond.leftX, physicsC.pos.y + collisionC.diamond.bottomHorizontalY,
+					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y + collisionC.diamond.bottomHorizontalY);
+				main.debugLine(physicsC.pos.x + collisionC.diamond.leftX, physicsC.pos.y + collisionC.diamond.topHorizontalY,
+					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y + collisionC.diamond.topHorizontalY);
 				main.debugRect(collisionC.movementRect);
 			}
 
 			PlatformComponent platformC = entity.getComponent(PlatformComponent.class);
 			if (platformC != null)
 			{
-				main.debugRect(platformC.rectangle);
+				main.debugRect(platformC.bounds);
 			}
 		}
 
