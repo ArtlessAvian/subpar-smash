@@ -1,5 +1,6 @@
 package com.artlessavian.subpar.fight.ecs.systems;
 
+import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
 import com.artlessavian.subpar.fight.ecs.components.ExtraPhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.badlogic.ashley.core.Engine;
@@ -41,6 +42,15 @@ public class PhysicsSystem extends EntitySystem
 			doMovement(deltaTime, physicsC, extraPhysicsC);
 
 			physicsC.acc.set(0,0);
+
+			CollisionComponent collisionC = entity.getComponent(CollisionComponent.class);
+			if (collisionC != null)
+			{
+				collisionC.movementRect.x = Math.min(physicsC.pos.x, physicsC.lastPos.x);
+				collisionC.movementRect.y = Math.min(physicsC.pos.y, physicsC.lastPos.y);
+				collisionC.movementRect.width = Math.abs(physicsC.pos.x - physicsC.lastPos.x);
+				collisionC.movementRect.height = Math.abs(physicsC.pos.y - physicsC.lastPos.y);
+			}
 		}
 	}
 
@@ -83,14 +93,13 @@ public class PhysicsSystem extends EntitySystem
 
 		if (extraPhysicsC != null)
 		{
-			projectedYVel -= extraPhysicsC.gravityAcc * deltaTime;
-
-			if (extraPhysicsC.grounded)
+			if (extraPhysicsC.ground != null)
 			{
 				physicsC.vel.y = 0;
 			}
 			else
 			{
+				projectedYVel -= extraPhysicsC.gravityAcc * deltaTime;
 				if (projectedYVel < -extraPhysicsC.maxFallSpeed) {projectedYVel = -extraPhysicsC.maxFallSpeed;}
 			}
 		}

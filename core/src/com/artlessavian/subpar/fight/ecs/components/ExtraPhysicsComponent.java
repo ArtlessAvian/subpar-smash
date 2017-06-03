@@ -1,10 +1,11 @@
 package com.artlessavian.subpar.fight.ecs.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Rectangle;
 
 public class ExtraPhysicsComponent implements Component
 {
-	public boolean grounded;
+	public Rectangle ground;
 
 	public boolean facingLeft; // flipped
 

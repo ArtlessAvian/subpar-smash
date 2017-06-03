@@ -25,6 +25,7 @@ public class SubparMain extends Game
 
 
 	private Sprite debugCircle;
+	private Sprite debugBox;
 	private Sprite debugTriangle;
 
 	@Override
@@ -95,6 +96,11 @@ public class SubparMain extends Game
 			debugCircle = new Sprite(new Texture("icon.png"));
 			debugCircle.setAlpha(0.4f);
 		}
+		if (debugBox == null)
+		{
+			debugBox = new Sprite(new Texture("Debug/Grid.png"));
+			debugBox.setAlpha(0.4f);
+		}
 		if (assetManager == null)
 		{
 			assetManager = new AssetManager();
@@ -140,9 +146,8 @@ public class SubparMain extends Game
 
 	public void debugRect(Rectangle r)
 	{
-		debugLine(r.x, r.y, r.x + r.width, r.y);
-		debugLine(r.x + r.width, r.y, r.x + r.width, r.y + r.height);
-		debugLine(r.x + r.width, r.y + r.height, r.x, r.y + r.height);
-		debugLine(r.x, r.y + r.height, r.x, r.y);
+		debugBox.setSize(r.width, r.height);
+		debugBox.setPosition(r.x, r.y);
+		debugBox.draw(spriteBatch);
 	}
 }

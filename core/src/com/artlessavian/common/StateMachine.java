@@ -1,4 +1,4 @@
-package com.artlessavian.subpar;
+package com.artlessavian.common;
 
 import java.util.HashMap;
 

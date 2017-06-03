@@ -1,4 +1,4 @@
-package com.artlessavian.subpar;
+package com.artlessavian.common;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -9,7 +9,7 @@ public abstract class State
 {
 	long lastEnter;
 	long lastExit;
-	public StateMachine sm;
+	public com.artlessavian.common.StateMachine sm;
 
 	public abstract void exit();
 

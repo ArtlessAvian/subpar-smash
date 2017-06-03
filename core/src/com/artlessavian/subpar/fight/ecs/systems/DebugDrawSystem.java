@@ -2,7 +2,9 @@ package com.artlessavian.subpar.fight.ecs.systems;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.FightScreen;
+import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
+import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
 import com.artlessavian.subpar.fight.ecs.components.SpriteComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -38,6 +40,27 @@ public class DebugDrawSystem extends EntitySystem
 	@Override
 	public void update(float rollover)
 	{
+		for (Entity entity : entities)
+		{
+			PhysicsComponent physicsC = entity.getComponent(PhysicsComponent.class);
+			CollisionComponent collisionC = entity.getComponent(CollisionComponent.class);
+			if (collisionC != null)
+			{
+//				main.debugLine(physicsC.pos.x, physicsC.pos.y + collisionC.diamond.topY,
+//					physicsC.pos.x, physicsC.pos.y + collisionC.diamond.bottomY);
+//				main.debugLine(physicsC.pos.x + collisionC.diamond.leftX, physicsC.pos.y,
+//					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y);
+				main.debugRect(collisionC.movementRect);
+			}
+
+			PlatformComponent platformC = entity.getComponent(PlatformComponent.class);
+			if (platformC != null)
+			{
+				main.debugRect(platformC.rectangle);
+			}
+		}
+
+
 		main.spriteBatch.setProjectionMatrix(main.screenSpace.combined);
 		int i = 0;
 		for (Entity entity : entities)
@@ -52,6 +75,7 @@ public class DebugDrawSystem extends EntitySystem
 				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 6 + 100 * (0 + (2 * i)), 18 + 12 * 2);
 				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 6 + 100 * (1 + (2 * i)), 18 + 12 * 2);
 			}
+
 			i++;
 		}
 	}

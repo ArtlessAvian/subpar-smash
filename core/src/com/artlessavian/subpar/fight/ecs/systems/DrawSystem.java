@@ -37,7 +37,7 @@ public class DrawSystem extends EntitySystem
 	{
 		this.setProcessing(false);
 
-		this.cam = new OrthographicCamera(1280, 720);
+		this.cam = new OrthographicCamera(2560, 1440);
 		cam.update();
 		camPos = new Vector2();
 
@@ -46,7 +46,7 @@ public class DrawSystem extends EntitySystem
 
 	public void resize()
 	{
-		cam.viewportWidth = 720 * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+		cam.viewportWidth = 1440 * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
 	}
 
 	public void shakeScreen(float time, float strength)

@@ -1,6 +1,6 @@
 package com.artlessavian.subpar.fight.fighterstates;
 
-import com.artlessavian.subpar.State;
+import com.artlessavian.common.State;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -42,7 +42,7 @@ public class WalkState extends State
 	@Override
 	public void doStuff()
 	{
-		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 100, 0);
+		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 300, 0);
 	}
 
 	@Override

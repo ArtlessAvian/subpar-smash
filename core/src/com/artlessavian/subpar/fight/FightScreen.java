@@ -2,6 +2,7 @@ package com.artlessavian.subpar.fight;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
+import com.artlessavian.subpar.fight.ecs.entities.Platform;
 import com.artlessavian.subpar.fight.ecs.systems.*;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
@@ -40,6 +41,12 @@ public class FightScreen implements Screen
 		engine.addSystem(debugDrawSystem);
 
 		stage = new Stage(main, this);
+		Platform[] platforms = stage.getPlatforms();
+		for (Platform p : platforms)
+		{
+			System.out.println("yee");
+			engine.addEntity(p);
+		}
 
 		fighters = new ArrayList<Fighter>();
 

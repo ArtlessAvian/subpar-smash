@@ -7,14 +7,16 @@ import com.artlessavian.subpar.fight.fighterstates.StandState;
 import com.artlessavian.subpar.fight.fighterstates.WalkState;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Fighter extends Entity
 {
 	SpriteComponent spriteC;
 	public PhysicsComponent physicsC;
-	ExtraPhysicsComponent extraPhysicsC;
+	public ExtraPhysicsComponent extraPhysicsC;
 	public InputComponent inputC;
 	private StateComponent stateC;
+	private CollisionComponent collisionC;
 
 	public Fighter(SubparMain main)
 	{
@@ -33,13 +35,16 @@ public class Fighter extends Entity
 		f.add(f.physicsC);
 
 		f.extraPhysicsC = new ExtraPhysicsComponent();
-		f.extraPhysicsC.maxXSpeed = 300;
-		f.extraPhysicsC.maxFallSpeed = 300;
+		f.extraPhysicsC.maxXSpeed = 1000;
+		f.extraPhysicsC.maxFallSpeed = 1000;
 		f.add(f.extraPhysicsC);
 
 		f.stateC = new StateComponent();
 		addStates(f, f.stateC);
 		f.add(f.stateC);
+
+		f.collisionC = new CollisionComponent(new FighterCollisionBehavior(), 64, 64);
+		f.add(f.collisionC);
 
 		f.inputC = new InputComponent();
 		f.add(f.inputC);
@@ -56,5 +61,63 @@ public class Fighter extends Entity
 		stateC.machine.addState(new WalkState(f));
 		stateC.machine.addState(new JumpState(f));
 		stateC.machine.gotoState(StandState.class);
+	}
+
+	public static class FighterCollisionBehavior implements CollisionComponent.CollisionBehavior
+	{
+		@Override
+		public void onTouchCeil(Rectangle rectangle, Entity thisEntity, Entity platform)
+		{
+			Fighter f = (Fighter)thisEntity;
+
+			f.physicsC.vel.y = 0;
+			f.physicsC.acc.y = 0;
+			f.physicsC.pos.y = rectangle.y - f.collisionC.diamond.topY;
+		}
+
+		@Override
+		public void onTouchFloor(Rectangle rectangle, Entity thisEntity, Entity platform)
+		{
+			Fighter f = (Fighter)thisEntity;
+
+			f.physicsC.vel.y = 0;
+			f.physicsC.acc.y = 0;
+
+			f.physicsC.pos.y = rectangle.y + rectangle.height - f.collisionC.diamond.bottomY;
+
+			f.extraPhysicsC.ground = platform.getComponent(PlatformComponent.class).rectangle;
+
+			// TODO: Replace with Landing/LandingLag
+			f.stateC.machine.gotoState(StandState.class);
+		}
+
+		@Override
+		public void onTouchLeft(Rectangle rectangle, Entity thisEntity, Entity platform)
+		{
+			// TODO: Testing, Replace me
+			Fighter f = (Fighter)thisEntity;
+
+			f.physicsC.vel.x = 10;
+			f.physicsC.acc.x = 0;
+			f.physicsC.pos.x = rectangle.x + rectangle.width - f.collisionC.diamond.leftX;
+		}
+
+		@Override
+		public void onTouchRight(Rectangle rectangle, Entity thisEntity, Entity platform)
+		{
+			// TODO: Testing, Replace me
+			Fighter f = (Fighter)thisEntity;
+
+			f.physicsC.vel.x = -10;
+			f.physicsC.acc.x = 0;
+			f.physicsC.pos.x = rectangle.x - f.collisionC.diamond.rightX;
+		}
+
+		@Override
+		public void onEdge(Rectangle rectangle, Entity thisEntity)
+		{
+			// TODO: Testing, Replace me
+			((Fighter)thisEntity).extraPhysicsC.ground = null;
+		}
 	}
 }

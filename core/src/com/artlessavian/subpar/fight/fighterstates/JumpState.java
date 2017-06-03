@@ -1,6 +1,6 @@
 package com.artlessavian.subpar.fight.fighterstates;
 
-import com.artlessavian.subpar.State;
+import com.artlessavian.common.State;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -22,6 +22,7 @@ public class JumpState extends State
 	@Override
 	public void enter()
 	{
+		fighter.extraPhysicsC.ground = null;
 		fighter.physicsC.vel.add(0, 1000);
 	}
 
