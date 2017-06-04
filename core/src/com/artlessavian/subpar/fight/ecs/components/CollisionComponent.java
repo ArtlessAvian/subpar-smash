@@ -15,6 +15,15 @@ public class CollisionComponent implements Component
 		public float rightX;
 		public float bottomHorizontalY;
 		public float bottomY;
+
+		public Rectangle fitRectangle(Rectangle r)
+		{
+			r.x = leftX;
+			r.y = bottomY;
+			r.width = rightX - leftX;
+			r.height = topY - bottomY;
+			return r;
+		}
 	}
 
 	public interface CollisionBehavior

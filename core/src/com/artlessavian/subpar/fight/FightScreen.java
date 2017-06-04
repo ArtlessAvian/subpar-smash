@@ -4,6 +4,7 @@ import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.components.InputComponent;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.artlessavian.subpar.fight.ecs.entities.Platform;
+import com.artlessavian.subpar.fight.ecs.entities.PlatformPolygon;
 import com.artlessavian.subpar.fight.ecs.systems.*;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
@@ -54,6 +55,8 @@ public class FightScreen implements Screen
 		Fighter f = new Fighter(main);
 		engine.addEntity(f);
 		fighters.add(f);
+
+		engine.addEntity(new PlatformPolygon(main));
 	}
 
 	@Override

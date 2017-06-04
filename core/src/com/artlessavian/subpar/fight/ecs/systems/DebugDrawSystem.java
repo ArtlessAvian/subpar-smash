@@ -1,11 +1,9 @@
 package com.artlessavian.subpar.fight.ecs.systems;
 
+import com.artlessavian.common.Polygon;
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.FightScreen;
-import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
-import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
-import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
-import com.artlessavian.subpar.fight.ecs.components.StateComponent;
+import com.artlessavian.subpar.fight.ecs.components.*;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -55,6 +53,15 @@ public class DebugDrawSystem extends EntitySystem
 			if (platformC != null)
 			{
 				main.debugRect(platformC.bounds);
+			}
+
+			PolygonComponent polygonC = entity.getComponent(PolygonComponent.class);
+			if (polygonC != null)
+			{
+				for (Polygon.Segment s : polygonC.p.edges)
+				{
+					main.debugLine(s.previousPoint.x, s.previousPoint.y, s.nextPoint.x, s.nextPoint.y);
+				}
 			}
 		}
 

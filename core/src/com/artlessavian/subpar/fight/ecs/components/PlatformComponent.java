@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 public class PlatformComponent implements Component
 {
 	public Rectangle bounds;
-	boolean isSoft = false;
 	Sprite frontSprite;
 
 	public PlatformComponent()
