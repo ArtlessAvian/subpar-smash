@@ -5,6 +5,7 @@ import com.artlessavian.subpar.fight.FightScreen;
 import com.artlessavian.subpar.fight.ecs.components.CollisionComponent;
 import com.artlessavian.subpar.fight.ecs.components.PhysicsComponent;
 import com.artlessavian.subpar.fight.ecs.components.PlatformComponent;
+import com.artlessavian.subpar.fight.ecs.components.StateComponent;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -65,12 +66,21 @@ public class DebugDrawSystem extends EntitySystem
 			PhysicsComponent physicsC = entity.getComponent(PhysicsComponent.class);
 			if (physicsC != null)
 			{
-				main.bitmapFont.draw(main.spriteBatch, physicsC.pos.x + "", 6 + 100 * (0 + (2 * i)), 18 + 12 * 0);
-				main.bitmapFont.draw(main.spriteBatch, physicsC.pos.y + "", 6 + 100 * (1 + (2 * i)), 18 + 12 * 0);
-				main.bitmapFont.draw(main.spriteBatch, physicsC.vel.x + "", 6 + 100 * (0 + (2 * i)), 18 + 12 * 1);
-				main.bitmapFont.draw(main.spriteBatch, physicsC.vel.y + "", 6 + 100 * (1 + (2 * i)), 18 + 12 * 1);
-				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 6 + 100 * (0 + (2 * i)), 18 + 12 * 2);
-				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 6 + 100 * (1 + (2 * i)), 18 + 12 * 2);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.pos.x + "", 6 + 100 * (0 + (2 * i)), 18 + 16 * 0);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.pos.y + "", 6 + 100 * (1 + (2 * i)), 18 + 16 * 0);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.vel.x + "", 6 + 100 * (0 + (2 * i)), 18 + 16 * 1);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.vel.y + "", 6 + 100 * (1 + (2 * i)), 18 + 16 * 1);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.x + "", 6 + 100 * (0 + (2 * i)), 18 + 16 * 2);
+				main.bitmapFont.draw(main.spriteBatch, physicsC.acc.y + "", 6 + 100 * (1 + (2 * i)), 18 + 16 * 2);
+			}
+
+			StateComponent stateC = entity.getComponent(StateComponent.class);
+			if (stateC != null)
+			{
+				main.bitmapFont.draw(main.spriteBatch, stateC.machine.current.getClass().getSimpleName() + "",
+					6 + 100 * (0 + (2 * i)), 18 + 16 * 3);
+				main.bitmapFont.draw(main.spriteBatch, stateC.machine.current.getTimeInState() + "",
+					6 + 100 * (0 + (2 * i)), 18 + 16 * 4);
 			}
 
 			i++;

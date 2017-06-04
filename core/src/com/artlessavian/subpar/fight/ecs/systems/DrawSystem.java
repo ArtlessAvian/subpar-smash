@@ -67,11 +67,9 @@ public class DrawSystem extends EntitySystem
 		for (Entity entity : entities)
 		{
 			SpriteComponent spriteC = entity.getComponent(SpriteComponent.class);
-
 			PhysicsComponent physicsC = entity.getComponent(PhysicsComponent.class);
 
 			moveToPosition(spriteC, physicsC);
-
 			spriteC.sprite.draw(main.spriteBatch);
 
 //			main.debugLine(-300, 0, 300, 0);

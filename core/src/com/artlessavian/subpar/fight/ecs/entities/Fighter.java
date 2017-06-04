@@ -2,6 +2,7 @@ package com.artlessavian.subpar.fight.ecs.entities;
 
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.components.*;
+import com.artlessavian.subpar.fight.fighterstates.JumpSquatState;
 import com.artlessavian.subpar.fight.fighterstates.JumpState;
 import com.artlessavian.subpar.fight.fighterstates.StandState;
 import com.artlessavian.subpar.fight.fighterstates.WalkState;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Fighter extends Entity
 {
-	SpriteComponent spriteC;
+	public SpriteComponent spriteC;
 	public PhysicsComponent physicsC;
 	public ExtraPhysicsComponent extraPhysicsC;
 	public InputComponent inputC;
@@ -30,9 +31,12 @@ public class Fighter extends Entity
 
 		// cut this if replacing with factory
 		f.physicsC = new PhysicsComponent();
-		f.physicsC.pos.set(0, 10);
+		f.physicsC.pos.set(0, 400);
 		f.physicsC.vel.set(0, 0);
 		f.add(f.physicsC);
+
+		f.inputC = new InputComponent();
+		f.add(f.inputC);
 
 		f.extraPhysicsC = new ExtraPhysicsComponent();
 		f.extraPhysicsC.maxXSpeed = 600;
@@ -40,21 +44,18 @@ public class Fighter extends Entity
 		f.extraPhysicsC.frictionAcc = 100;
 		f.add(f.extraPhysicsC);
 
-		f.stateC = new StateComponent();
-		addStates(f, f.stateC);
-		f.add(f.stateC);
-
-		f.collisionC = new CollisionComponent(new FighterCollisionBehavior(), 256, 128);
-		f.add(f.collisionC);
-
-		f.inputC = new InputComponent();
-		f.add(f.inputC);
-
 		f.spriteC = new SpriteComponent(main.assetManager.get("Prototype/Fox.png", Texture.class));
 		f.spriteC.sprite.setSize(256, 256);
 		f.spriteC.sprite.setU2(1/4f);
 		f.spriteC.sprite.setV2(1/4f);
 		f.add(f.spriteC);
+
+		f.collisionC = new CollisionComponent(new FighterCollisionBehavior(), 256, 128);
+		f.add(f.collisionC);
+
+		f.stateC = new StateComponent();
+		addStates(f, f.stateC);
+		f.add(f.stateC);
 
 		return f;
 	}
@@ -64,6 +65,7 @@ public class Fighter extends Entity
 		stateC.machine.addState(new StandState(f));
 		stateC.machine.addState(new WalkState(f));
 		stateC.machine.addState(new JumpState(f));
+		stateC.machine.addState(new JumpSquatState(f));
 		stateC.machine.gotoState(StandState.class);
 	}
 

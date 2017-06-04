@@ -21,17 +21,17 @@ public class Stage
 		platforms = new Platform[5];
 		platforms[0] = new Platform(main);
 		platforms[1] = new Platform(main);
-		platforms[1].platformC.bounds.setSize(100, 100);
-		platforms[1].platformC.bounds.setPosition(100, -75);
+		platforms[1].platformC.bounds.setSize(200, 100);
+		platforms[1].platformC.bounds.setCenter((float)Math.random() * 500 + 500, (float)Math.random() * 400);
 		platforms[2] = new Platform(main);
-		platforms[2].platformC.bounds.setSize(100, 100);
-		platforms[2].platformC.bounds.setPosition(170, -50);
+		platforms[2].platformC.bounds.setSize(200, 100);
+		platforms[2].platformC.bounds.setCenter((float)Math.random() * 500 + 500, (float)Math.random() * 400);
 		platforms[3] = new Platform(main);
-		platforms[3].platformC.bounds.setSize(100, 100);
-		platforms[3].platformC.bounds.setPosition(240, -25);
+		platforms[3].platformC.bounds.setSize(200, 100);
+		platforms[3].platformC.bounds.setCenter((float)Math.random() * 500 + 500, (float)Math.random() * 400);
 		platforms[4] = new Platform(main);
-		platforms[4].platformC.bounds.setSize(100, 100);
-		platforms[4].platformC.bounds.setPosition(310,  -0);
+		platforms[4].platformC.bounds.setSize(200, 100);
+		platforms[4].platformC.bounds.setCenter((float)Math.random() * 500 + 500, (float)Math.random() * 400);
 	}
 
 	public Platform[] getPlatforms()

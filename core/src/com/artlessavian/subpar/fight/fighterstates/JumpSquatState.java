@@ -3,11 +3,11 @@ package com.artlessavian.subpar.fight.fighterstates;
 import com.artlessavian.common.State;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 
-public class WalkState extends State
+public class JumpSquatState extends State
 {
-	final Fighter fighter;
+	Fighter fighter;
 
-	public WalkState(Fighter fighter)
+	public JumpSquatState(Fighter fighter)
 	{
 		this.fighter = fighter;
 	}
@@ -21,19 +21,18 @@ public class WalkState extends State
 	@Override
 	public void enter()
 	{
-		fighter.extraPhysicsC.frictionAcc = 0;
+		fighter.spriteC.sprite.setU(2/4f);
+		fighter.spriteC.sprite.setU2(3/4f);
+		fighter.spriteC.sprite.setV(0/4f);
+		fighter.spriteC.sprite.setV2(1/4f);
 	}
 
 	@Override
 	public boolean changeStateMaybe()
 	{
-		if (fighter.inputC.inputs.main.x == 0)
+		if (getTimeInState() > 6)
 		{
-			sm.gotoState(StandState.class);
-		}
-		if (fighter.inputC.inputs.main.y == 1)
-		{
-			sm.gotoState(JumpSquatState.class);
+			sm.gotoState(JumpState.class);
 		}
 		return false;
 	}
@@ -41,7 +40,7 @@ public class WalkState extends State
 	@Override
 	public void doStuff()
 	{
-		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 1800, 0);
+
 	}
 
 }

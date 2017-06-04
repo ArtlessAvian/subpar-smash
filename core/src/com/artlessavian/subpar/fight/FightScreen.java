@@ -1,6 +1,7 @@
 package com.artlessavian.subpar.fight;
 
 import com.artlessavian.subpar.SubparMain;
+import com.artlessavian.subpar.fight.ecs.components.InputComponent;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
 import com.artlessavian.subpar.fight.ecs.entities.Platform;
 import com.artlessavian.subpar.fight.ecs.systems.*;
@@ -62,6 +63,7 @@ public class FightScreen implements Screen
 	}
 
 	boolean timeStop;
+	float timeScale = 1;
 	float rollover;
 	float deltaTime = 1 / 60f;
 	long engineRuns = 0;
@@ -69,10 +71,21 @@ public class FightScreen implements Screen
 	@Override
 	public void render(float delta)
 	{
+		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {timeScale *= 2;
+			System.out.println(timeScale);}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {timeScale /= 2;
+			System.out.println(timeScale);}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.MINUS)) {timeStop = !timeStop;}
-		if (!timeStop || Gdx.input.isKeyJustPressed(Input.Keys.EQUALS))
+		if (!timeStop)
 		{
-			rollover += delta;
+			rollover += delta * timeScale;
+		}
+		else
+		{
+			if (Gdx.input.isKeyJustPressed(Input.Keys.EQUALS))
+			{
+				rollover += deltaTime;
+			}
 		}
 
 		for (; rollover > 0; rollover -= deltaTime)

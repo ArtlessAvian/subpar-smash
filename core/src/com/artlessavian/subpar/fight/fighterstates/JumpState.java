@@ -2,7 +2,6 @@ package com.artlessavian.subpar.fight.fighterstates;
 
 import com.artlessavian.common.State;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class JumpState extends State
 {
@@ -23,7 +22,7 @@ public class JumpState extends State
 	public void enter()
 	{
 		fighter.extraPhysicsC.ground = null;
-		if (Math.random() < 0.5)
+		if (fighter.inputC.inputs.main.y == 1)
 		{
 			fighter.physicsC.vel.add(0, 2000);
 		}
@@ -31,6 +30,11 @@ public class JumpState extends State
 		{
 			fighter.physicsC.vel.add(0, 1500);
 		}
+
+		fighter.spriteC.sprite.setU(0/4f);
+		fighter.spriteC.sprite.setU2(1/4f);
+		fighter.spriteC.sprite.setV(0/4f);
+		fighter.spriteC.sprite.setV2(1/4f);
 	}
 
 	@Override
@@ -45,9 +49,4 @@ public class JumpState extends State
 		fighter.physicsC.acc.add(fighter.inputC.inputs.main.x * 10 * 60, 0);
 	}
 
-	@Override
-	public void editSprite(Sprite sprite)
-	{
-
-	}
 }
