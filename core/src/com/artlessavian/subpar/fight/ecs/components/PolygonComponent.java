@@ -10,7 +10,10 @@ public class PolygonComponent implements Component
 
 	public PolygonComponent()
 	{
-		p = new Polygon(new Vector2(500, 0));
-		p.addPoint(new Vector2(500, 200));
+		p = new Polygon(new Vector2(-1000, 0));
+		for (int i = -10; i <= 10; i++)
+		{
+			p.addPoint(new Vector2(i * 100, i * i - 500));
+		}
 	}
 }

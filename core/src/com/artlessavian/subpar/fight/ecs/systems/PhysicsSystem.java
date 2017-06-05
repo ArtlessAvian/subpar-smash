@@ -93,7 +93,7 @@ public class PhysicsSystem extends EntitySystem
 
 		if (extraPhysicsC != null)
 		{
-			if (extraPhysicsC.ground != null)
+			if (extraPhysicsC.ground != null || extraPhysicsC.ground2 != null)
 			{
 				physicsC.vel.y = 0;
 			}

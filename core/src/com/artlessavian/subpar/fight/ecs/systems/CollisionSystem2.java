@@ -8,6 +8,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class CollisionSystem2 extends EntitySystem
 {
@@ -29,6 +30,8 @@ public class CollisionSystem2 extends EntitySystem
 		for (Entity entity : entities)
 		{
 			PhysicsComponent physicsC = entity.getComponent(PhysicsComponent.class);
+			ExtraPhysicsComponent extraPhysicsC = entity.getComponent(ExtraPhysicsComponent.class);
+			CollisionComponent collisionC = entity.getComponent(CollisionComponent.class);
 
 			// check that there is a collision with any wall
 			boolean leftCollided;
@@ -36,20 +39,48 @@ public class CollisionSystem2 extends EntitySystem
 			// handle after every wall is checked
 
 			boolean floorCollided;
-			for (Entity polygon: polygons)
+			Vector2 feet = physicsC.pos.cpy().add(0, collisionC.diamond.bottomY);
+			if (extraPhysicsC.ground2 != null)
 			{
-				PolygonComponent polygonC = polygon.getComponent(PolygonComponent.class);
-				for (Polygon.Segment s : polygonC.p.edges)
+				while (extraPhysicsC.ground2 != null && physicsC.pos.x < extraPhysicsC.ground2.previousPoint.x)
 				{
-					if (s.distance(physicsC.pos) * s.distance(physicsC.lastPos) < 0 && s.projectionOnSegment(physicsC.pos))
+					extraPhysicsC.ground2 = extraPhysicsC.ground2.previous;
+				}
+				while (extraPhysicsC.ground2 != null && extraPhysicsC.ground2.nextPoint.x < physicsC.pos.x)
+				{
+					extraPhysicsC.ground2 = extraPhysicsC.ground2.next;
+				}
+				if (extraPhysicsC.ground2 != null)
+				{
+					physicsC.pos.y -= extraPhysicsC.ground2.distance(feet);
+				}
+			}
+			if (extraPhysicsC.ground2 == null)
+			{
+				Vector2 feetPrevious = physicsC.lastPos.cpy().add(0, collisionC.diamond.bottomY);
+				for (Entity polygon : polygons)
+				{
+					PolygonComponent polygonC = polygon.getComponent(PolygonComponent.class);
+					for (Polygon.Segment s : polygonC.p.edges)
 					{
-						physicsC.pos.set(s.projection(physicsC.pos));
-						physicsC.vel.setAngle(s.normal);
-						System.out.println(s.normal);
+						if (Math.abs(s.normal - 90) > 45) {continue;}
+						if (s.distance(feet) * s.distance(feetPrevious) < 0 && s.projectionOnSegment(feet))
+						{
+							collisionC.behavior.onTouchFloor2(s, entity, polygon);
+						}
 					}
 				}
 			}
+
 			boolean ceilingCollided;
+
+
+
+
+			if (physicsC.pos.y < -1000)
+			{
+				physicsC.pos.set(0, 400);
+			}
 		}
 	}
 }

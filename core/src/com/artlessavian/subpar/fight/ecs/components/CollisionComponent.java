@@ -1,5 +1,6 @@
 package com.artlessavian.subpar.fight.ecs.components;
 
+import com.artlessavian.common.Polygon;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Rectangle;
@@ -39,6 +40,8 @@ public class CollisionComponent implements Component
 		void onEdge(Rectangle rectangle, Entity thisEntity);
 
 		void onAnyCollision(Rectangle rectangle, Entity thisEntity, Entity platform);
+
+		void onTouchFloor2(Polygon.Segment segment, Entity thisEntity, Entity platform);
 	}
 
 	// should form a plus sign, kinda

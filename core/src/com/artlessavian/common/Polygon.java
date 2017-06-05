@@ -12,8 +12,8 @@ public class Polygon
 		public Vector2 previousPoint;
 		public Vector2 nextPoint;
 
-		Segment next = null;
-		Segment previous = null;
+		public Segment next = null;
+		public Segment previous = null;
 
 		public Segment(Vector2 previousPoint, Vector2 nextPoint)
 		{
@@ -35,30 +35,9 @@ public class Polygon
 			float rx = numerator/denominator * sx;
 			float ry = numerator/denominator * sy;
 
-			if (sx != 0)
-			{
-				if (sy != 0)
-				{
-					return rx/sx <= 1 && ry/sy <= 1;
-				}
-				else
-				{
-					return rx/sx <= 1;
-				}
-			}
-			else
-			{
-				if (sy != 0)
-				{
-					return ry/sy <= 1;
-				}
-				else
-				{
-					// the segment is a point
-					System.err.println("Segment is a Point");
-					return true; //?
-				}
-			}
+			if (sx != Float.NaN && rx/sx > 1) {return false;}
+			if (sy != Float.NaN && ry/sy > 1) {return false;}
+			return true;
 		}
 
 		public Vector2 projection(Vector2 point)
@@ -143,7 +122,6 @@ public class Polygon
 	public static void main(String[] args)
 	{
 		Segment s = new Segment(new Vector2(0, 0), new Vector2(3, 3));
-		System.out.println(s.projection(new Vector2(1,3)));
-		System.out.println(s.distance(new Vector2(1,3)));
+		s.projectionOnSegment()
 	}
 }

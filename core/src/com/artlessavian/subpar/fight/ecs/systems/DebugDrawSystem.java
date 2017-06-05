@@ -54,6 +54,18 @@ public class DebugDrawSystem extends EntitySystem
 			{
 				main.debugRect(platformC.bounds);
 			}
+			
+			ExtraPhysicsComponent extraPhysicsC = entity.getComponent(ExtraPhysicsComponent.class);
+			if (extraPhysicsC != null)
+			{
+				if (extraPhysicsC.ground2 != null)
+				{
+					main.debugLine(extraPhysicsC.ground2.previousPoint.x,
+						extraPhysicsC.ground2.previousPoint.y - (float)Math.random() * 30,
+						extraPhysicsC.ground2.nextPoint.x,
+						extraPhysicsC.ground2.nextPoint.y - (float)Math.random() * 30);
+				}
+			}
 
 			PolygonComponent polygonC = entity.getComponent(PolygonComponent.class);
 			if (polygonC != null)

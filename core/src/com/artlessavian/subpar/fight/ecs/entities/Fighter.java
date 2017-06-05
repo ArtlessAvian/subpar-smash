@@ -1,5 +1,6 @@
 package com.artlessavian.subpar.fight.ecs.entities;
 
+import com.artlessavian.common.Polygon;
 import com.artlessavian.subpar.SubparMain;
 import com.artlessavian.subpar.fight.ecs.components.*;
 import com.artlessavian.subpar.fight.fighterstates.JumpSquatState;
@@ -135,6 +136,25 @@ public class Fighter extends Entity
 			collisionC.movementRect.y = Math.min(physicsC.pos.y, physicsC.lastPos.y);
 			collisionC.movementRect.width = Math.abs(physicsC.pos.x - physicsC.lastPos.x);
 			collisionC.movementRect.height = Math.abs(physicsC.pos.y - physicsC.lastPos.y);
+		}
+
+		@Override
+		public void onTouchFloor2(Polygon.Segment segment, Entity thisEntity, Entity platform)
+		{
+			Fighter f = (Fighter)thisEntity;
+
+			float dY = segment.nextPoint.y - segment.previousPoint.y;
+			float dX = segment.nextPoint.x - segment.previousPoint.x;
+			float dx = f.physicsC.pos.x - segment.previousPoint.x;
+			f.physicsC.pos.y = dx * dY/dX + segment.previousPoint.y - f.collisionC.diamond.bottomY;
+
+			f.physicsC.vel.y = 0;
+			f.physicsC.acc.y = 0;
+
+			f.extraPhysicsC.ground2 = segment;
+
+			// TODO: Replace with Landing/LandingLag
+			f.stateC.machine.gotoState(StandState.class);
 		}
 	}
 }
