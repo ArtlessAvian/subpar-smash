@@ -20,7 +20,82 @@ public class Polygon
 			this.previousPoint = previousPoint;
 			this.nextPoint = nextPoint;
 
-			normal = nextPoint.angle(previousPoint);
+			normal = (float)(Math.toDegrees(Math.atan2(nextPoint.y - previousPoint.y, nextPoint.x - previousPoint.x)) + 90);
+			System.out.println(normal);
+		}
+
+		public boolean projectionOnSegment(Vector2 point)
+		{
+			float vx = point.x - previousPoint.x;
+			float vy = point.y - previousPoint.y;
+			float sx = nextPoint.x - previousPoint.x;
+			float sy = nextPoint.y - previousPoint.y;
+			float numerator = (vx * sx) + (vy * sy);
+			float denominator = (sx * sx) + (sy * sy);
+			float rx = numerator/denominator * sx;
+			float ry = numerator/denominator * sy;
+
+			if (sx != 0)
+			{
+				if (sy != 0)
+				{
+					return rx/sx <= 1 && ry/sy <= 1;
+				}
+				else
+				{
+					return rx/sx <= 1;
+				}
+			}
+			else
+			{
+				if (sy != 0)
+				{
+					return ry/sy <= 1;
+				}
+				else
+				{
+					// the segment is a point
+					System.err.println("Segment is a Point");
+					return true; //?
+				}
+			}
+		}
+
+		public Vector2 projection(Vector2 point)
+		{
+			float vx = point.x - previousPoint.x;
+			float vy = point.y - previousPoint.y;
+			float sx = nextPoint.x - previousPoint.x;
+			float sy = nextPoint.y - previousPoint.y;
+			float numerator = (vx * sx) + (vy * sy);
+			float denominator = (sx * sx) + (sy * sy);
+			float rx = numerator/denominator * sx + previousPoint.x;
+			float ry = numerator/denominator * sy + previousPoint.y;
+			return new Vector2(rx, ry);
+		}
+
+		public float distance(Vector2 point)
+		{
+			if (previousPoint.x != nextPoint.x)
+			{
+				float dY = nextPoint.y - previousPoint.y;
+				float dX = nextPoint.x - previousPoint.x;
+				float dx = point.x - previousPoint.x;
+				float dy = dx * dY/dX;
+				float shearY = point.y - dy - previousPoint.y;
+				return (float)(shearY * Math.sin(Math.toRadians(180 - normal)));
+			}
+			else
+			{
+				if (nextPoint.y > previousPoint.y)
+				{
+					return -point.x + previousPoint.x;
+				}
+				else
+				{
+					return point.x - previousPoint.x;
+				}
+			}
 		}
 	}
 
@@ -36,7 +111,7 @@ public class Polygon
 	public Polygon addPoint(Vector2 nextPoint)
 	{
 		Segment s;
-		if (nextPoint.epsilonEquals(initial, 1))
+		if (nextPoint.epsilonEquals(initial, 0.001f))
 		{
 			return loopMe();
 		}
@@ -46,8 +121,8 @@ public class Polygon
 		}
 		else
 		{
-			s = new Segment(edges.get(edges.size()-1).nextPoint, nextPoint);
-			s.previous = edges.get(edges.size()-1);
+			s = new Segment(edges.get(edges.size() - 1).nextPoint, nextPoint);
+			s.previous = edges.get(edges.size() - 1);
 			s.previous.next = s;
 		}
 		edges.add(s);
@@ -57,11 +132,18 @@ public class Polygon
 
 	public Polygon loopMe()
 	{
-		Segment s = new Segment(edges.get(edges.size()-1).nextPoint, initial);
-		s.previous = edges.get(edges.size()-1);
+		Segment s = new Segment(edges.get(edges.size() - 1).nextPoint, initial);
+		s.previous = edges.get(edges.size() - 1);
 		s.previous.next = s;
 		s.next = edges.get(0);
 		edges.add(s);
 		return this;
+	}
+
+	public static void main(String[] args)
+	{
+		Segment s = new Segment(new Vector2(0, 0), new Vector2(3, 3));
+		System.out.println(s.projection(new Vector2(1,3)));
+		System.out.println(s.distance(new Vector2(1,3)));
 	}
 }

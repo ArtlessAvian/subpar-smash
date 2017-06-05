@@ -34,6 +34,7 @@ public class FightScreen implements Screen
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new PhysicsSystem());
 		engine.addSystem(new CollisionSystem());
+		engine.addSystem(new CollisionSystem2());
 
 		drawSystem = new DrawSystem(main, this);
 		engine.addSystem(drawSystem);

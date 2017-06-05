@@ -54,65 +54,98 @@ public class CollisionSystem extends EntitySystem
 		}
 	}
 
-	private ArrayList<Vector2> getPossibleCollisions(Polygon p, Rectangle rectangle)
-	{
-		ArrayList<Vector2> possible = new ArrayList<Vector2>();
-
-		for (Polygon.Segment s : p.edges)
-		{
-			if (s.nextPoint.y >= rectangle.y && s.nextPoint.y <= rectangle.y + rectangle.getHeight())
-			{
-				possible.add(s.nextPoint);
-			}
-		}
-
-		return possible;
-	}
+//	private boolean yInside(Vector2 vec, Rectangle rectangle)
+//	{
+//		return vec.y >= rectangle.y && vec.y <= rectangle.y + rectangle.getHeight();
+//	}
+//
+//	private ArrayList<Vector2> getPossibleCollisions(Polygon p, Rectangle rectangle)
+//	{
+//		ArrayList<Polygon.Segment> special = new ArrayList<Polygon.Segment>();
+//		ArrayList<Vector2> possible = new ArrayList<Vector2>();
+//
+//		boolean previousInside = yInside(p.edges.get(0).previousPoint, rectangle);
+//
+//		for (int i = 0; i < p.edges.size(); i++)
+//		{
+//			Polygon.Segment s = p.edges.get(i);
+//			if (yInside(s.nextPoint, rectangle))
+//			{
+//				possible.add(s.nextPoint);
+//				if (!previousInside)
+//				{
+//					special.add(s);
+//					previousInside = true;
+//				}
+//			}
+//			else
+//			{
+//				if (previousInside)
+//				{
+//					special.add(s);
+//					previousInside = false;
+//				}
+//			}
+//		}
+//
+//		for (Polygon.Segment s : special)
+//		{
+//			s.
+//		}
+//
+//
+//		return possible;
+//	}
+//
+//	private void doPolygonCollision(Entity polygon, CollisionComponent collisionC, Entity entity, ExtraPhysicsComponent extraPhysicsC)
+//	{
+//		PolygonComponent polygonC = polygon.getComponent(PolygonComponent.class);
+//
+//		// floor collision
+//		// wall collision
+//		collisionC.diamond.fitRectangle(dirtyRectangle);
+//		dirtyRectangle.setCenter(collisionC.movementRect.x, collisionC.movementRect.y);
+//		dirtyRectangle.width += collisionC.movementRect.width;
+//		dirtyRectangle.height += collisionC.movementRect.height;
+//
+//		Vector2 leftCollide = null;
+//		Vector2 rightCollide = null;
+//
+//		ArrayList<Vector2> vecs = getPossibleCollisions(polygonC.p, dirtyRectangle);
+//		for (Vector2 vec : vecs)
+//		{
+//			if (dirtyRectangle.contains(vec))
+//			{
+//				if (vec.x < dirtyRectangle.x + dirtyRectangle.width/2)
+//				{
+//					if (leftCollide == null || leftCollide.x < vec.x)
+//					{
+//						leftCollide = vec;
+//					}
+//				}
+//				else
+//				{
+//					if (rightCollide == null || rightCollide.x > vec.x)
+//					{
+//						rightCollide = vec;
+//					}
+//				}
+//			}
+//		}
+//
+//		if (leftCollide != null)
+//		{
+//			System.out.println("left");
+//		}
+//		else if (rightCollide != null)
+//		{
+//			System.out.println("right");
+//		}
+//	}
 
 	private void doPolygonCollision(Entity polygon, CollisionComponent collisionC, Entity entity, ExtraPhysicsComponent extraPhysicsC)
 	{
-		PolygonComponent polygonC = polygon.getComponent(PolygonComponent.class);
 
-		// floor collision
-		// wall collision
-		collisionC.diamond.fitRectangle(dirtyRectangle);
-		dirtyRectangle.setCenter(collisionC.movementRect.x, collisionC.movementRect.y);
-		dirtyRectangle.width += collisionC.movementRect.width;
-		dirtyRectangle.height += collisionC.movementRect.height;
-
-		Vector2 leftCollide = null;
-		Vector2 rightCollide = null;
-
-		ArrayList<Vector2> vecs = getPossibleCollisions(polygonC.p, dirtyRectangle);
-		for (Vector2 vec : vecs)
-		{
-			if (dirtyRectangle.contains(vec))
-			{
-				if (vec.x < dirtyRectangle.x + dirtyRectangle.width/2)
-				{
-					if (leftCollide == null || leftCollide.x < vec.x)
-					{
-						leftCollide = vec;
-					}
-				}
-				else
-				{
-					if (rightCollide == null || rightCollide.x > vec.x)
-					{
-						rightCollide = vec;
-					}
-				}
-			}
-		}
-
-		if (leftCollide != null)
-		{
-			System.out.println("left");
-		}
-		else if (rightCollide != null)
-		{
-			System.out.println("right");
-		}
 	}
 
 	// TODO: fix argument order
