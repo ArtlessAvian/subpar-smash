@@ -1,5 +1,6 @@
 package com.artlessavian.common;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -21,60 +22,35 @@ public class Polygon
 			this.nextPoint = nextPoint;
 
 			normal = (float)(Math.toDegrees(Math.atan2(nextPoint.y - previousPoint.y, nextPoint.x - previousPoint.x)) + 90);
-			System.out.println(normal);
 		}
 
-		public boolean projectionOnSegment(Vector2 point)
+		public float intersectVertical(float x)
 		{
-			float vx = point.x - previousPoint.x;
-			float vy = point.y - previousPoint.y;
-			float sx = nextPoint.x - previousPoint.x;
-			float sy = nextPoint.y - previousPoint.y;
-			float numerator = (vx * sx) + (vy * sy);
-			float denominator = (sx * sx) + (sy * sy);
-			float rx = numerator/denominator * sx;
-			float ry = numerator/denominator * sy;
-
-			if (sx != Float.NaN && rx/sx > 1) {return false;}
-			if (sy != Float.NaN && ry/sy > 1) {return false;}
-			return true;
+			return (nextPoint.y - previousPoint.y)/(nextPoint.x - previousPoint.x) * (x - previousPoint.x) + previousPoint.y;
 		}
 
-		public Vector2 projection(Vector2 point)
+		public float intersectHorizontal(float y)
 		{
-			float vx = point.x - previousPoint.x;
-			float vy = point.y - previousPoint.y;
-			float sx = nextPoint.x - previousPoint.x;
-			float sy = nextPoint.y - previousPoint.y;
-			float numerator = (vx * sx) + (vy * sy);
-			float denominator = (sx * sx) + (sy * sy);
-			float rx = numerator/denominator * sx + previousPoint.x;
-			float ry = numerator/denominator * sy + previousPoint.y;
-			return new Vector2(rx, ry);
+			return (nextPoint.x - previousPoint.x) / (nextPoint.y - previousPoint.y) * (y - previousPoint.y) + previousPoint.x;
 		}
 
-		public float distance(Vector2 point)
+		public boolean pointOnSegment(Vector2 point)
 		{
-			if (previousPoint.x != nextPoint.x)
-			{
-				float dY = nextPoint.y - previousPoint.y;
-				float dX = nextPoint.x - previousPoint.x;
-				float dx = point.x - previousPoint.x;
-				float dy = dx * dY/dX;
-				float shearY = point.y - dy - previousPoint.y;
-				return (float)(shearY * Math.sin(Math.toRadians(180 - normal)));
-			}
+			return distance(point) < 0.01f;
+		}
+
+		public Vector2 intersect(Vector2 a, Vector2 b)
+		{
+			Vector2 v = new Vector2(0,0);
+			if (Intersector.intersectSegments(previousPoint, nextPoint, a, b, v))
+				return v;
 			else
-			{
-				if (nextPoint.y > previousPoint.y)
-				{
-					return -point.x + previousPoint.x;
-				}
-				else
-				{
-					return point.x - previousPoint.x;
-				}
-			}
+				return null;
+		}
+
+ 		public float distance(Vector2 point)
+		{
+			return Intersector.distanceSegmentPoint(previousPoint, nextPoint, point);
 		}
 	}
 
@@ -121,7 +97,7 @@ public class Polygon
 
 	public static void main(String[] args)
 	{
-		Segment s = new Segment(new Vector2(0, 0), new Vector2(3, 3));
-		s.projectionOnSegment()
+		Segment s = new Segment(new Vector2(-1000, -100), new Vector2(1000, -200));
+		System.out.println(s.intersect(new Vector2(0, 0), new Vector2(0, -200)));
 	}
 }

@@ -39,9 +39,11 @@ public class CollisionSystem2 extends EntitySystem
 			// handle after every wall is checked
 
 			boolean floorCollided;
+
 			Vector2 feet = physicsC.pos.cpy().add(0, collisionC.diamond.bottomY);
 			if (extraPhysicsC.ground2 != null)
 			{
+				// works assuming the ground is a floor and not a ceiling
 				while (extraPhysicsC.ground2 != null && physicsC.pos.x < extraPhysicsC.ground2.previousPoint.x)
 				{
 					extraPhysicsC.ground2 = extraPhysicsC.ground2.previous;
@@ -52,7 +54,8 @@ public class CollisionSystem2 extends EntitySystem
 				}
 				if (extraPhysicsC.ground2 != null)
 				{
-					physicsC.pos.y -= extraPhysicsC.ground2.distance(feet);
+					// TODO: aefj;alefjajflaj
+					physicsC.pos.y = extraPhysicsC.ground2.intersectVertical(physicsC.pos.x) - collisionC.diamond.bottomY;
 				}
 			}
 			if (extraPhysicsC.ground2 == null)
@@ -63,10 +66,19 @@ public class CollisionSystem2 extends EntitySystem
 					PolygonComponent polygonC = polygon.getComponent(PolygonComponent.class);
 					for (Polygon.Segment s : polygonC.p.edges)
 					{
-						if (Math.abs(s.normal - 90) > 45) {continue;}
-						if (s.distance(feet) * s.distance(feetPrevious) < 0 && s.projectionOnSegment(feet))
+//						if (Math.abs(s.normal - 90) > 45) {continue;}
+						Vector2 v = s.intersect(feet, feetPrevious);
+						if (v != null)
 						{
-							collisionC.behavior.onTouchFloor2(s, entity, polygon);
+							System.out.println(s.distance(feet) + " " + s.distance(feetPrevious));
+							System.out.println("passed through " + s.previousPoint + " " + s.nextPoint);
+							Vector2 aaa = s.intersect(feet, feetPrevious);
+							System.out.println(aaa + " " + s.distance(aaa) + " " + s.pointOnSegment(aaa));
+							System.out.println(feet + " " + feetPrevious);
+							if (s.pointOnSegment(aaa))
+							{
+								collisionC.behavior.onTouchFloor2(s, entity, polygon);
+							}
 						}
 					}
 				}
