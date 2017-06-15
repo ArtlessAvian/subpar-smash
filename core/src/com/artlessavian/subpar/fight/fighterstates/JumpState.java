@@ -22,7 +22,6 @@ public class JumpState extends State
 	public void enter()
 	{
 		fighter.collisionC.ground = null;
-		fighter.collisionC.ground2 = null;
 		if (fighter.inputC.inputs.main.y == 1)
 		{
 			fighter.physicsC.vel.add(0, 2000);

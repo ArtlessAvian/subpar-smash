@@ -41,7 +41,7 @@ public class PhysicsSystem extends EntitySystem
 
 			physicsC.lastPos.set(physicsC.pos);
 
-			if (collisionC == null || (collisionC.ground == null && collisionC.ground2 == null))
+			if (collisionC == null || collisionC.ground == null)
 			{
 				doAirMovement(deltaTime, physicsC, extraPhysicsC);
 			}
@@ -88,17 +88,17 @@ public class PhysicsSystem extends EntitySystem
 			deltaAlong *= -1;
 			do
 			{
-				if (deltaAlong > feet.dst(collisionC.ground2.previousPoint))
+				if (deltaAlong > feet.dst(collisionC.ground.previousPoint))
 				{
-					deltaAlong -= feet.dst(collisionC.ground2.previousPoint);
-					feet.set(collisionC.ground2.previousPoint);
-					collisionC.ground2 = collisionC.ground2.previous;
+					deltaAlong -= feet.dst(collisionC.ground.previousPoint);
+					feet.set(collisionC.ground.previousPoint);
+					collisionC.ground = collisionC.ground.previous;
 				}
 				else
 				{
 					Vector2 helper = new Vector2();
-					helper.set(collisionC.ground2.previousPoint);
-					helper.sub(collisionC.ground2.nextPoint);
+					helper.set(collisionC.ground.previousPoint);
+					helper.sub(collisionC.ground.nextPoint);
 					helper.setLength(deltaAlong);
 					feet.add(helper);
 					deltaAlong = 0;
@@ -106,7 +106,7 @@ public class PhysicsSystem extends EntitySystem
 
 				// check for walls
 				// check for ledges
-				if (collisionC.ground2 == null)
+				if (collisionC.ground == null)
 				{
 					collisionC.behavior.onEdge(null, entity);
 					deltaAlong = 0;
@@ -119,17 +119,17 @@ public class PhysicsSystem extends EntitySystem
 		{
 			do
 			{
-				if (deltaAlong > feet.dst(collisionC.ground2.nextPoint))
+				if (deltaAlong > feet.dst(collisionC.ground.nextPoint))
 				{
-					deltaAlong -= feet.dst(collisionC.ground2.nextPoint);
-					feet.set(collisionC.ground2.nextPoint);
-					collisionC.ground2 = collisionC.ground2.next;
+					deltaAlong -= feet.dst(collisionC.ground.nextPoint);
+					feet.set(collisionC.ground.nextPoint);
+					collisionC.ground = collisionC.ground.next;
 				}
 				else
 				{
 					Vector2 helper = new Vector2();
-					helper.set(collisionC.ground2.nextPoint)
-						.sub(collisionC.ground2.previousPoint)
+					helper.set(collisionC.ground.nextPoint)
+						.sub(collisionC.ground.previousPoint)
 						.setLength(deltaAlong);
 					feet.add(helper);
 					deltaAlong = 0;
@@ -137,7 +137,7 @@ public class PhysicsSystem extends EntitySystem
 
 				// check for walls
 				// check for ledges
-				if (collisionC.ground2 == null)
+				if (collisionC.ground == null)
 				{
 					collisionC.behavior.onEdge(null, entity);
 					deltaAlong = 0;
@@ -148,18 +148,18 @@ public class PhysicsSystem extends EntitySystem
 
 		physicsC.pos.set(feet).sub(0,collisionC.diamond.bottomY);
 //
-//		while (collisionC.ground2 != null && physicsC.pos.x < collisionC.ground2.previousPoint.x)
+//		while (collisionC.ground != null && physicsC.pos.x < collisionC.ground.previousPoint.x)
 //		{
-//			collisionC.ground2 = collisionC.ground2.previous;
+//			collisionC.ground = collisionC.ground.previous;
 //		}
-//		while (collisionC.ground2 != null && collisionC.ground2.nextPoint.x < physicsC.pos.x)
+//		while (collisionC.ground != null && collisionC.ground.nextPoint.x < physicsC.pos.x)
 //		{
-//			collisionC.ground2 = collisionC.ground2.next;
+//			collisionC.ground = collisionC.ground.next;
 //		}
-//		if (collisionC.ground2 != null)
+//		if (collisionC.ground != null)
 //		{
 //			// TODO: aefj;alefjajflaj
-//			physicsC.pos.y = collisionC.ground2.intersectVertical(physicsC.pos.x) - collisionC.diamond.bottomY;
+//			physicsC.pos.y = collisionC.ground.intersectVertical(physicsC.pos.x) - collisionC.diamond.bottomY;
 //		}
 	}
 

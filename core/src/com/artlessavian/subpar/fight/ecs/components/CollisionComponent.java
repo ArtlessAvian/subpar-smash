@@ -29,23 +29,20 @@ public class CollisionComponent implements Component
 
 	public abstract static class CollisionBehavior
 	{
-		public abstract void onTouchCeil(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchCeil(Polygon.Segment segment, Entity thisEntity, Entity platform);
 
-		public abstract void onTouchFloor(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchFloor(Polygon.Segment segment, Entity thisEntity, Entity platform);
 
-		public abstract void onTouchLeft(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchLeft(Polygon.Segment segment, Entity thisEntity, Entity platform);
 
-		public abstract void onTouchRight(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchRight(Polygon.Segment segment, Entity thisEntity, Entity platform);
 
-		public abstract void onEdge(Rectangle rectangle, Entity thisEntity);
+		public abstract void onEdge(Polygon.Segment segment, Entity thisEntity);
 
-		public abstract void onAnyCollision(Rectangle rectangle, Entity thisEntity, Entity platform);
-
-		public abstract void onTouchFloor2(Polygon.Segment segment, Entity thisEntity, Entity platform);
+		public abstract void onAnyCollision(Polygon.Segment segment, Entity thisEntity, Entity platform);
 	}
 
-	public Rectangle ground;
-	public Polygon.Segment ground2;
+	public Polygon.Segment ground;
 
 	public CollisionThing diamond;
 	public CollisionBehavior behavior;

@@ -1,9 +1,7 @@
 package com.artlessavian.subpar.fight;
 
 import com.artlessavian.subpar.SubparMain;
-import com.artlessavian.subpar.fight.ecs.components.InputComponent;
 import com.artlessavian.subpar.fight.ecs.entities.Fighter;
-import com.artlessavian.subpar.fight.ecs.entities.Platform;
 import com.artlessavian.subpar.fight.ecs.entities.PlatformPolygon;
 import com.artlessavian.subpar.fight.ecs.systems.*;
 import com.badlogic.ashley.core.Engine;
@@ -33,8 +31,7 @@ public class FightScreen implements Screen
 //		engine.addSystem(new InputSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new PhysicsSystem());
-//		engine.addSystem(new CollisionSystem());
-		engine.addSystem(new CollisionSystem2());
+		engine.addSystem(new CollisionSystem());
 
 		drawSystem = new DrawSystem(main, this);
 		engine.addSystem(drawSystem);
@@ -44,8 +41,8 @@ public class FightScreen implements Screen
 		engine.addSystem(debugDrawSystem);
 
 		stage = new Stage(main, this);
-		Platform[] platforms = stage.getPlatforms();
-		for (Platform p : platforms)
+		PlatformPolygon[] platforms = stage.getPlatforms();
+		for (PlatformPolygon p : platforms)
 		{
 			System.out.println("yee");
 			engine.addEntity(p);
@@ -56,8 +53,6 @@ public class FightScreen implements Screen
 		Fighter f = new Fighter(main);
 		engine.addEntity(f);
 		fighters.add(f);
-
-		engine.addEntity(new PlatformPolygon(main));
 	}
 
 	@Override
@@ -69,7 +64,7 @@ public class FightScreen implements Screen
 	boolean timeStop;
 	float timeScale = 1;
 	float rollover;
-	float deltaTime = 1 / 60f;
+	float deltaTime = 1 / 60f / 10f;
 	long engineRuns = 0;
 
 	@Override
