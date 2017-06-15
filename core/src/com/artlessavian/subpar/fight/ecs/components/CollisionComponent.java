@@ -27,25 +27,25 @@ public class CollisionComponent implements Component
 		}
 	}
 
-	public interface CollisionBehavior
+	public abstract static class CollisionBehavior
 	{
-		void onTouchCeil(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchCeil(Rectangle rectangle, Entity thisEntity, Entity platform);
 
-		void onTouchFloor(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchFloor(Rectangle rectangle, Entity thisEntity, Entity platform);
 
-		void onTouchLeft(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchLeft(Rectangle rectangle, Entity thisEntity, Entity platform);
 
-		void onTouchRight(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onTouchRight(Rectangle rectangle, Entity thisEntity, Entity platform);
 
-		void onEdge(Rectangle rectangle, Entity thisEntity);
+		public abstract void onEdge(Rectangle rectangle, Entity thisEntity);
 
-		void onAnyCollision(Rectangle rectangle, Entity thisEntity, Entity platform);
+		public abstract void onAnyCollision(Rectangle rectangle, Entity thisEntity, Entity platform);
 
-		void onTouchFloor2(Polygon.Segment segment, Entity thisEntity, Entity platform);
+		public abstract void onTouchFloor2(Polygon.Segment segment, Entity thisEntity, Entity platform);
 	}
 
-	// should form a plus sign, kinda
-	public Rectangle movementRect;
+	public Rectangle ground;
+	public Polygon.Segment ground2;
 
 	public CollisionThing diamond;
 	public CollisionBehavior behavior;
@@ -53,7 +53,6 @@ public class CollisionComponent implements Component
 	public CollisionComponent(CollisionBehavior behavior, float height, float width)
 	{
 		this.behavior = behavior;
-		this.movementRect = new Rectangle(0, 0, 0, 0);
 
 		this.diamond = new CollisionThing();
 		diamond.topY = height/2f;

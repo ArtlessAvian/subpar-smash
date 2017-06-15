@@ -46,7 +46,6 @@ public class DebugDrawSystem extends EntitySystem
 					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y + collisionC.diamond.bottomHorizontalY);
 				main.debugLine(physicsC.pos.x + collisionC.diamond.leftX, physicsC.pos.y + collisionC.diamond.topHorizontalY,
 					physicsC.pos.x + collisionC.diamond.rightX, physicsC.pos.y + collisionC.diamond.topHorizontalY);
-				main.debugRect(collisionC.movementRect);
 			}
 
 			PlatformComponent platformC = entity.getComponent(PlatformComponent.class);
@@ -56,14 +55,14 @@ public class DebugDrawSystem extends EntitySystem
 			}
 			
 			ExtraPhysicsComponent extraPhysicsC = entity.getComponent(ExtraPhysicsComponent.class);
-			if (extraPhysicsC != null)
+			if (collisionC != null)
 			{
-				if (extraPhysicsC.ground2 != null)
+				if (collisionC.ground2 != null)
 				{
-					main.debugLine(extraPhysicsC.ground2.previousPoint.x,
-						extraPhysicsC.ground2.previousPoint.y - (float)Math.random() * 30,
-						extraPhysicsC.ground2.nextPoint.x,
-						extraPhysicsC.ground2.nextPoint.y - (float)Math.random() * 30);
+					main.debugLine(collisionC.ground2.previousPoint.x,
+						collisionC.ground2.previousPoint.y - (float)Math.random() * 30,
+						collisionC.ground2.nextPoint.x,
+						collisionC.ground2.nextPoint.y - (float)Math.random() * 30);
 				}
 			}
 

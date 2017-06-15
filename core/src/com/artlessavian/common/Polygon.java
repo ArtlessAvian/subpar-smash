@@ -48,6 +48,11 @@ public class Polygon
 				return null;
 		}
 
+		public float getLength()
+		{
+			return previousPoint.dst(nextPoint);
+		}
+
  		public float distance(Vector2 point)
 		{
 			return Intersector.distanceSegmentPoint(previousPoint, nextPoint, point);
@@ -90,7 +95,10 @@ public class Polygon
 		Segment s = new Segment(edges.get(edges.size() - 1).nextPoint, initial);
 		s.previous = edges.get(edges.size() - 1);
 		s.previous.next = s;
+
 		s.next = edges.get(0);
+		s.next.previous = s;
+
 		edges.add(s);
 		return this;
 	}

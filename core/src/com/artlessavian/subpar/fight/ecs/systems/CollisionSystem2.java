@@ -41,24 +41,7 @@ public class CollisionSystem2 extends EntitySystem
 			boolean floorCollided;
 
 			Vector2 feet = physicsC.pos.cpy().add(0, collisionC.diamond.bottomY);
-			if (extraPhysicsC.ground2 != null)
-			{
-				// works assuming the ground is a floor and not a ceiling
-				while (extraPhysicsC.ground2 != null && physicsC.pos.x < extraPhysicsC.ground2.previousPoint.x)
-				{
-					extraPhysicsC.ground2 = extraPhysicsC.ground2.previous;
-				}
-				while (extraPhysicsC.ground2 != null && extraPhysicsC.ground2.nextPoint.x < physicsC.pos.x)
-				{
-					extraPhysicsC.ground2 = extraPhysicsC.ground2.next;
-				}
-				if (extraPhysicsC.ground2 != null)
-				{
-					// TODO: aefj;alefjajflaj
-					physicsC.pos.y = extraPhysicsC.ground2.intersectVertical(physicsC.pos.x) - collisionC.diamond.bottomY;
-				}
-			}
-			if (extraPhysicsC.ground2 == null)
+			if (collisionC.ground2 == null)
 			{
 				Vector2 feetPrevious = physicsC.lastPos.cpy().add(0, collisionC.diamond.bottomY);
 				for (Entity polygon : polygons)
@@ -67,16 +50,14 @@ public class CollisionSystem2 extends EntitySystem
 					for (Polygon.Segment s : polygonC.p.edges)
 					{
 //						if (Math.abs(s.normal - 90) > 45) {continue;}
+						if (s.pointOnSegment(feetPrevious)) {continue;}
 						Vector2 v = s.intersect(feet, feetPrevious);
 						if (v != null)
 						{
-							System.out.println(s.distance(feet) + " " + s.distance(feetPrevious));
-							System.out.println("passed through " + s.previousPoint + " " + s.nextPoint);
 							Vector2 aaa = s.intersect(feet, feetPrevious);
-							System.out.println(aaa + " " + s.distance(aaa) + " " + s.pointOnSegment(aaa));
-							System.out.println(feet + " " + feetPrevious);
 							if (s.pointOnSegment(aaa))
 							{
+								physicsC.pos.set(aaa).sub(0, collisionC.diamond.bottomY);
 								collisionC.behavior.onTouchFloor2(s, entity, polygon);
 							}
 						}
@@ -85,9 +66,6 @@ public class CollisionSystem2 extends EntitySystem
 			}
 
 			boolean ceilingCollided;
-
-
-
 
 			if (physicsC.pos.y < -1000)
 			{

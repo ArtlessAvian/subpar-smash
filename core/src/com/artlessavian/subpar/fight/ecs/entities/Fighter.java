@@ -18,7 +18,7 @@ public class Fighter extends Entity
 	public ExtraPhysicsComponent extraPhysicsC;
 	public InputComponent inputC;
 	private StateComponent stateC;
-	private CollisionComponent collisionC;
+	public CollisionComponent collisionC;
 
 	public Fighter(SubparMain main)
 	{
@@ -70,7 +70,7 @@ public class Fighter extends Entity
 		stateC.machine.gotoState(StandState.class);
 	}
 
-	public static class FighterCollisionBehavior implements CollisionComponent.CollisionBehavior
+	public static class FighterCollisionBehavior extends CollisionComponent.CollisionBehavior
 	{
 		@Override
 		public void onTouchCeil(Rectangle rectangle, Entity thisEntity, Entity platform)
@@ -92,7 +92,7 @@ public class Fighter extends Entity
 
 			f.physicsC.pos.y = rectangle.y + rectangle.height - f.collisionC.diamond.bottomY;
 
-			f.extraPhysicsC.ground = platform.getComponent(PlatformComponent.class).bounds;
+			f.collisionC.ground = platform.getComponent(PlatformComponent.class).bounds;
 
 			// TODO: Replace with Landing/LandingLag
 			f.stateC.machine.gotoState(StandState.class);
@@ -124,7 +124,7 @@ public class Fighter extends Entity
 		public void onEdge(Rectangle rectangle, Entity thisEntity)
 		{
 			// TODO: Testing, Replace me
-			((Fighter)thisEntity).extraPhysicsC.ground = null;
+			((Fighter)thisEntity).collisionC.ground = null;
 		}
 
 		@Override
@@ -132,10 +132,6 @@ public class Fighter extends Entity
 		{
 			PhysicsComponent physicsC = ((Fighter)thisEntity).physicsC;
 			CollisionComponent collisionC = ((Fighter)thisEntity).collisionC;
-			collisionC.movementRect.x = Math.min(physicsC.pos.x, physicsC.lastPos.x);
-			collisionC.movementRect.y = Math.min(physicsC.pos.y, physicsC.lastPos.y);
-			collisionC.movementRect.width = Math.abs(physicsC.pos.x - physicsC.lastPos.x);
-			collisionC.movementRect.height = Math.abs(physicsC.pos.y - physicsC.lastPos.y);
 		}
 
 		@Override
@@ -143,15 +139,10 @@ public class Fighter extends Entity
 		{
 			Fighter f = (Fighter)thisEntity;
 
-			float dY = segment.nextPoint.y - segment.previousPoint.y;
-			float dX = segment.nextPoint.x - segment.previousPoint.x;
-			float dx = f.physicsC.pos.x - segment.previousPoint.x;
-			f.physicsC.pos.y = dx * dY/dX + segment.previousPoint.y - f.collisionC.diamond.bottomY;
-
 			f.physicsC.vel.y = 0;
 			f.physicsC.acc.y = 0;
 
-			f.extraPhysicsC.ground2 = segment;
+			f.collisionC.ground2 = segment;
 
 			// TODO: Replace with Landing/LandingLag
 			f.stateC.machine.gotoState(StandState.class);

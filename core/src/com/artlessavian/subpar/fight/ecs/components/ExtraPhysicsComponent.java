@@ -6,9 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class ExtraPhysicsComponent implements Component
 {
-	public Rectangle ground;
-	public Polygon.Segment ground2;
-
 	public boolean facingLeft; // flipped
 
 	public boolean ignoreClamps = true;
